@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/auth/welcomepage.dart';
 import 'package:taxi_app/pages/onboarding/screen/screen1.dart';
 import 'package:taxi_app/pages/onboarding/screen/screen2.dart';
 import 'package:taxi_app/pages/onboarding/screen/screen3.dart';
@@ -82,7 +83,8 @@ class _MainOnboardingState extends State<MainOnboarding> {
             TextButton(
                 onPressed: () {
                   if (indexScreen == Screen.length - 1) {
-                    print("Mentok");
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => welcomepage()));
                   } else {
                     handleNext();
                   }
