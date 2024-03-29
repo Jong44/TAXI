@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/auth/LoginScreen.dart';
 import 'package:taxi_app/pages/splash/SplashScreen.dart';
 
 void main() {
@@ -15,11 +16,12 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: "PlusJakartaSans",
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.black,
           ),
           useMaterial3: true,
         ),
-        home: SplashScreen());
+        home: LoginScreen());
   }
 }
