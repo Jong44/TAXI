@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_app/pages/teskesehatan/skor.dart';
 
-class start_tes extends StatelessWidget {
-  const start_tes({super.key});
+class skor extends StatefulWidget {
+  const skor({super.key});
 
+  @override
+  State<skor> createState() => _skorState();
+}
+
+class _skorState extends State<skor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,43 +28,34 @@ class start_tes extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 40,
             ),
             Center(
-              child: Image.asset("assets/depresi.png", width: 270),
+              child: Image.asset("assets/score.png", width: 270),
             ),
             SizedBox(
-              height: 20,
+              height: 40,
             ),
             Text(
-              "Ketahui Kesehatan Mental Kamu",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+              "Skor kamu menandakan gangguan kecemasan sedang",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
             ),
             SizedBox(
               height: 30,
             ),
             Text(
-              "Hasil dari tes ini adalah gambaran kondisi kesehatan mentalmu, tidak ada jawaban yang benar ataupun salah jadi jawab dengan jujur ya!",
+              "Kamu sedang merasa gelisah dan kesulitan mengontrol kecemasanmu. Gejala fisik seperti gangguan tidur  dan kesulitan berfokus, mungkin lebih terasa, dan meningkat pda saat stres. Dapatkan bantuan dari para ahli untuk memahami pikiran, perasaan, dan gejala yang kamu alami",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
             ),
             SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Perlu diingat untuk tidak mendiagnosis diri sendiri dari hasil tes ini.",
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 30,
+              height: 90,
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => skor()));
-              },
+              onPressed: () {},
               child: Text(
-                "Mulai",
+                "Carikan Ahli",
                 style: TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
