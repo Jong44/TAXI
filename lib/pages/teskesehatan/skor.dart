@@ -28,7 +28,7 @@ class _skorState extends State<skor> {
         child: Column(
           children: [
             SizedBox(
-              height: 40,
+              height: 60,
             ),
             Center(
               child: Image.asset("assets/score.png", width: 270),
@@ -50,7 +50,7 @@ class _skorState extends State<skor> {
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
             ),
             SizedBox(
-              height: 90,
+              height: 70,
             ),
             ElevatedButton(
               onPressed: () {},
@@ -61,6 +61,20 @@ class _skorState extends State<skor> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff173b34),
                   minimumSize: Size(double.infinity, 50)),
+            ),
+            Row(
+              children: [
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Lihat Detail",
+                      style: TextStyle(color: Colors.black),
+                    )),
+                SizedBox(
+                  width: 143,
+                ),
+                TextButton(onPressed: () {}, child: Text("Ulangi Tes"))
+              ],
             ),
           ],
         ),
