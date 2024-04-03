@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/search_dokter/search_page.dart';
 
 class skor extends StatefulWidget {
   const skor({super.key});
@@ -53,7 +54,10 @@ class _skorState extends State<skor> {
               height: 70,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => search_page()));
+              },
               child: Text(
                 "Carikan Ahli",
                 style: TextStyle(color: Colors.white),
@@ -63,6 +67,7 @@ class _skorState extends State<skor> {
                   minimumSize: Size(double.infinity, 50)),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
                     onPressed: () {},
@@ -70,9 +75,6 @@ class _skorState extends State<skor> {
                       "Lihat Detail",
                       style: TextStyle(color: Colors.black),
                     )),
-                SizedBox(
-                  width: 143,
-                ),
                 TextButton(onPressed: () {}, child: Text("Ulangi Tes"))
               ],
             ),
