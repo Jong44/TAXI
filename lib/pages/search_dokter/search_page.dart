@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:taxi_app/pages/notifikasi/notif.dart';
 
 class search_page extends StatefulWidget {
   const search_page({super.key});
@@ -118,7 +119,22 @@ class _search_pageState extends State<search_page> {
                           ),
                         ),
                       )),
-            )
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => notif()));
+                },
+                child: Text(
+                  "Next Page",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff173b34),
+                    minimumSize: Size(double.infinity, 50))),
           ],
         ),
       ),
