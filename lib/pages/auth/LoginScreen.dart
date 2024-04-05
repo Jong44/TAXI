@@ -83,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: MainButton(
+                  borderRadius: 50.0,
                   title: "Login",
                   onpressed: () {
                     Navigator.push(context,

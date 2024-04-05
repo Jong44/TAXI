@@ -28,7 +28,7 @@ class MainInputText extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor != null ? backgroundColor : Colors.white,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(width: 1),
+            border: backgroundColor != null ? Border() : Border.all(width: 1),
           ),
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: TextField(
@@ -36,6 +36,7 @@ class MainInputText extends StatelessWidget {
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(top: 14),
                 border: InputBorder.none,
+                focusedBorder: InputBorder.none,
                 prefixIcon: prefixIcon,
                 hintText: placeholder),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:taxi_app/components/global/RatingStar.dart';
 
 class HomeSlidePsikolog extends StatelessWidget {
   const HomeSlidePsikolog({super.key});
@@ -66,16 +67,7 @@ class HomeSlidePsikolog extends StatelessWidget {
                               SizedBox(
                                 height: 10,
                               ),
-                              Row(
-                                children: [
-                                  for (int i = 0; i < 5; i++)
-                                    Icon(
-                                      Icons.star,
-                                      size: 11,
-                                      color: Color(0xffF7CE45),
-                                    )
-                                ],
-                              ),
+                              RatingStar(),
                               Text(
                                 "Keluarga, Percintaan, Keadaan Emosi, 3 Lainnya",
                                 style: TextStyle(

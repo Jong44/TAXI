@@ -49,6 +49,7 @@ class CardTes extends StatelessWidget {
                 width: 100,
                 height: 35,
                 child: MainButton(
+                  borderRadius: 50.0,
                   title: "Mulai",
                   onpressed: () {},
                 ),
