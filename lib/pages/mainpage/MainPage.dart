@@ -61,35 +61,32 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: ListScreen[indexScreen],
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        height: 60,
-        child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            itemCount: ListScreen.length,
-            itemExtent: 73,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  handleChangeScreen(index);
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Menu[index]['icon'],
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      Menu[index]['title'],
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ],
-                ),
-              );
-            }),
-      ),
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          height: 63,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+                Menu.length,
+                (index) => InkWell(
+                      onTap: () {
+                        handleChangeScreen(index);
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Menu[index]['icon'],
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            Menu[index]['title'],
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+                    )),
+          )),
     );
   }
 }

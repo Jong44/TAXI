@@ -14,6 +14,22 @@ class ChatbotScreen extends StatefulWidget {
 
 class _ChatbotScreenState extends State<ChatbotScreen> {
   bool isStart = false;
+  TextEditingController textController = TextEditingController();
+  List chatList = [
+    {"text": "Hai Bot, Saya Ingin Bantuan", "isBot": false},
+    {"text": "Hai, Ada yang bisa saya bantu?", "isBot": true},
+  ];
+
+  void handleReplyBot() {
+    setState(() {
+      chatList.add({
+        "text":
+            "Lorem ipsum dolor sit amet consectetur. Porta dui tellus volutpat morbi. Faucibus nullam in massa morbi ligula mattis ipsum. Risus phasellus iaculis sit lectus sit pellentesque. Sed fringilla tellus sed vel est. Tellus elementum magna porttitor mi amet. Condimentum sed magna eget leo tempor. Aliquam faucibus ornare tellus adipiscing nibh. Consectetur id nam dolor sed sit nunc vestibulum. onvallis.",
+        "isBot": true
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,37 +74,62 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: ListView(
-                      children: [
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color(0xff235347),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.only(left: 100),
-                            child: Text(
-                              "Hai Bot, Saya Ingin Bantuan",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            width: 100,
-                            height: 50,
-                            color: Color(0xff235347),
-                          ),
-                        )
-                      ],
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: chatList.length,
+                      itemBuilder: (context, index) {
+                        if (chatList[index]["isBot"] == true) {
+                          return Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 12),
+                                  margin: EdgeInsets.only(right: 100),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color(0xffF2F2F2),
+                                  ),
+                                  child: Text(
+                                    chatList[index]["text"],
+                                    style: TextStyle(color: Colors.black),
+                                    semanticsLabel: "Chatbot Text",
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          );
+                        } else {
+                          return Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color(0xff235347),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 12),
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(left: 100),
+                                  child: Text(
+                                    "Hai Bot, Saya Ingin Bantuan",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          );
+                        }
+                      },
                     ),
                   ),
                   Container(
@@ -105,22 +146,35 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                       children: [
                         Expanded(
                           child: TextField(
+                            controller: textController,
                             maxLines: 1,
                             style: TextStyle(fontSize: 14),
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
                         ),
-                        Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff235347),
-                          ),
-                          child: Icon(
-                            Icons.send,
-                            color: Colors.white,
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              chatList.add({
+                                "text": textController.text,
+                                "isBot": false
+                              });
+                              handleReplyBot();
+                              textController.text = "";
+                            });
+                          },
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(0xff235347),
+                            ),
+                            child: Icon(
+                              Icons.send,
+                              color: Colors.white,
+                            ),
                           ),
                         )
                       ],
@@ -135,7 +189,12 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   isStart = true;
                 });
               },
-              startWithTextPress: () {},
+              startWithTextPress: () {
+                setState(() {
+                  textController.text = "Hai Bot, Saya Ingin Bantuan";
+                  isStart = true;
+                });
+              },
             ),
     );
   }
