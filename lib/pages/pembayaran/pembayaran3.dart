@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/riwayat_transaksi/riwayat.dart';
+import 'package:taxi_app/pages/teskesehatan/skor.dart';
 
 class pembayaran3 extends StatelessWidget {
   const pembayaran3({super.key});
@@ -9,7 +11,8 @@ class pembayaran3 extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(
+                context, MaterialPageRoute(builder: (context) => skor()));
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -134,7 +137,10 @@ class pembayaran3 extends StatelessWidget {
               height: 30,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => riwayat()));
+              },
               child: Text(
                 "Lanjutkan",
                 style: TextStyle(color: Colors.white),
