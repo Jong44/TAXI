@@ -5,8 +5,18 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 
 class RiwayatDokter extends StatelessWidget {
+  final String nama;
+  final String ahli;
+  final List pendidikan;
+  final int sipp;
   final List kategori;
-  const RiwayatDokter({super.key, required this.kategori});
+  const RiwayatDokter(
+      {super.key,
+      required this.kategori,
+      required this.nama,
+      required this.ahli,
+      required this.pendidikan,
+      required this.sipp});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +28,7 @@ class RiwayatDokter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Marisca Kusuma, M.Psi",
+              nama,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
             ),
             Icon(
@@ -29,7 +39,7 @@ class RiwayatDokter extends StatelessWidget {
           ],
         ),
         Text(
-          "Psikolog",
+          ahli,
           style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
         ),
         SizedBox(
@@ -72,13 +82,16 @@ class RiwayatDokter extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                Text(
-                  "S2 Psikologi UNIKA Atma Jaya",
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
-                ),
-                Text(
-                  "S1 Sarjana Psikologi UNIKA Atma Jaya",
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    pendidikan.length,
+                    (index) => Text(
+                      pendidikan[index],
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
+                    ),
+                  ),
                 ),
               ],
             )
@@ -109,7 +122,7 @@ class RiwayatDokter extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  "SIPP : 1234567890",
+                  "SIPP : $sipp",
                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
                 ),
               ],

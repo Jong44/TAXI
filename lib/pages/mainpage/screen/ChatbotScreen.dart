@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
 import 'package:taxi_app/components/global/OnlineStatus.dart';
 import 'package:taxi_app/components/pages/chatbotscreen/WelcomeChat.dart';
+import 'package:taxi_app/services/ChatbotService.dart';
 
 class ChatbotScreen extends StatefulWidget {
   const ChatbotScreen({super.key});
@@ -13,21 +16,78 @@ class ChatbotScreen extends StatefulWidget {
 }
 
 class _ChatbotScreenState extends State<ChatbotScreen> {
+  final ScrollController _scrollController = ScrollController();
   bool isStart = false;
+  bool isLoading = false;
   TextEditingController textController = TextEditingController();
-  List chatList = [
-    {"text": "Hai Bot, Saya Ingin Bantuan", "isBot": false},
-    {"text": "Hai, Ada yang bisa saya bantu?", "isBot": true},
-  ];
 
-  void handleReplyBot() {
+  String threads = "";
+
+  List<dynamic> listMessage = [];
+
+  Future<void> getMessage() async {
+    ChatbotService chatbotService = ChatbotService();
+    Map<String, dynamic> data = await chatbotService.getMessage();
+    List<dynamic> dataMessage = data['messages']['data'];
     setState(() {
-      chatList.add({
-        "text":
-            "Lorem ipsum dolor sit amet consectetur. Porta dui tellus volutpat morbi. Faucibus nullam in massa morbi ligula mattis ipsum. Risus phasellus iaculis sit lectus sit pellentesque. Sed fringilla tellus sed vel est. Tellus elementum magna porttitor mi amet. Condimentum sed magna eget leo tempor. Aliquam faucibus ornare tellus adipiscing nibh. Consectetur id nam dolor sed sit nunc vestibulum. onvallis.",
-        "isBot": true
+      listMessage = dataMessage as List<dynamic>;
+    });
+    print(dataMessage);
+  }
+
+  Future<void> getThreads() async {
+    ChatbotService chatbotService = ChatbotService();
+    String threads = await chatbotService.getStoredThreads();
+    setState(() {
+      if (threads != "") {
+        isStart = true;
+      }
+    });
+  }
+
+  Future<void> sendMessage() async {
+    ChatbotService chatbotService = ChatbotService();
+    await chatbotService.sendMessage(textController.text);
+
+    setState(() {
+      textController.text = "";
+    });
+    _scrollToBottom();
+  }
+
+  Timer? timer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMessage();
+    setState(() {
+      timer = Timer.periodic(Duration(seconds: 3), (timer) {
+        if (isStart == true) {
+          getMessage();
+        }
       });
     });
+    getThreads();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
+  }
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent + 1500,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    timer?.cancel();
   }
 
   @override
@@ -75,28 +135,36 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                 children: [
                   Expanded(
                     child: ListView.builder(
+                      controller: _scrollController,
                       shrinkWrap: true,
-                      itemCount: chatList.length,
+                      itemCount: listMessage.length,
                       itemBuilder: (context, index) {
-                        if (chatList[index]["isBot"] == true) {
+                        if (listMessage[index]["role"] == "assistant") {
                           return Column(
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 12),
-                                  margin: EdgeInsets.only(right: 100),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Color(0xffF2F2F2),
-                                  ),
-                                  child: Text(
-                                    chatList[index]["text"],
-                                    style: TextStyle(color: Colors.black),
-                                    semanticsLabel: "Chatbot Text",
-                                  ),
-                                ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 12),
+                                    margin: EdgeInsets.only(right: 100),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Color(0xffF2F2F2),
+                                    ),
+                                    child: listMessage[index]["content"]
+                                                    .length >
+                                                0 &&
+                                            listMessage[index]["content"][0]
+                                                    ['text']['value'] !=
+                                                null
+                                        ? Text(
+                                            listMessage[index]["content"][0]
+                                                ['text']['value'],
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          )
+                                        : Text("Tunggu sebentar...")),
                               ),
                               SizedBox(
                                 height: 20,
@@ -109,19 +177,24 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                               Align(
                                 alignment: Alignment.topRight,
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Color(0xff235347),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 12),
-                                  alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.only(left: 100),
-                                  child: Text(
-                                    "Hai Bot, Saya Ingin Bantuan",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Color(0xff235347),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 12),
+                                    alignment: Alignment.centerLeft,
+                                    margin: EdgeInsets.only(left: 100),
+                                    child: listMessage[index]?["content"][0]
+                                                ?['text']['value'] !=
+                                            null
+                                        ? Text(
+                                            listMessage[index]["content"][0]
+                                                ['text']['value'],
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )
+                                        : SizedBox()),
                               ),
                               SizedBox(
                                 height: 20,
@@ -134,20 +207,20 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    height: 55,
+                    height: textController.text.length > 40 ? 100 : 50,
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(0, 0, 0, 0.1),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                            width: 1, color: Color.fromRGBO(0, 0, 0, 0.8))),
+                            width: 1, color: Color.fromRGBO(0, 0, 0, 0.2))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: TextField(
                             controller: textController,
-                            maxLines: 1,
+                            maxLines: textController.text.length > 40 ? 3 : 1,
                             style: TextStyle(fontSize: 14),
                             decoration:
                                 InputDecoration(border: InputBorder.none),
@@ -156,12 +229,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                         InkWell(
                           onTap: () {
                             setState(() {
-                              chatList.add({
-                                "text": textController.text,
-                                "isBot": false
-                              });
-                              handleReplyBot();
-                              textController.text = "";
+                              sendMessage();
                             });
                           },
                           child: Container(
@@ -185,14 +253,24 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
             )
           : WelcomeChat(
               startPress: () {
+                ChatbotService().createThreads();
                 setState(() {
-                  isStart = true;
+                  Timer(Duration(seconds: 2), () {
+                    setState(() {
+                      isStart = true;
+                    });
+                  });
                 });
               },
               startWithTextPress: () {
+                ChatbotService().createThreads();
                 setState(() {
                   textController.text = "Hai Bot, Saya Ingin Bantuan";
-                  isStart = true;
+                  Timer(Duration(seconds: 2), () {
+                    setState(() {
+                      isStart = true;
+                    });
+                  });
                 });
               },
             ),

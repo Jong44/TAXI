@@ -2,12 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/utils/formatRupiah.dart';
 
 class Pembayaran extends StatefulWidget {
   final Map<String, dynamic> dataPesanan;
   final onpress;
+  final int harga;
   const Pembayaran(
-      {super.key, required this.dataPesanan, required this.onpress});
+      {super.key,
+      required this.dataPesanan,
+      required this.onpress,
+      required this.harga});
 
   @override
   State<Pembayaran> createState() => _PembayaranState();
@@ -79,8 +84,8 @@ class _PembayaranState extends State<Pembayaran> {
                   children: [
                     Text(
                       "Selesaikan Pembayaran dalam",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 11.5),
                     ),
                     Row(
                       children: [
@@ -92,7 +97,7 @@ class _PembayaranState extends State<Pembayaran> {
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
                             "${hours.toString()}",
-                            style: TextStyle(color: Colors.white, fontSize: 11),
+                            style: TextStyle(color: Colors.white, fontSize: 8),
                           ),
                         ),
                         Text(" : "),
@@ -104,7 +109,7 @@ class _PembayaranState extends State<Pembayaran> {
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
                             "${minutes.toString()}",
-                            style: TextStyle(color: Colors.white, fontSize: 11),
+                            style: TextStyle(color: Colors.white, fontSize: 8),
                           ),
                         ),
                         Text(" : "),
@@ -116,7 +121,7 @@ class _PembayaranState extends State<Pembayaran> {
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
                             "${seconds.toString()}",
-                            style: TextStyle(color: Colors.white, fontSize: 11),
+                            style: TextStyle(color: Colors.white, fontSize: 8),
                           ),
                         ),
                       ],
@@ -179,7 +184,7 @@ class _PembayaranState extends State<Pembayaran> {
                 SizedBox(
                   height: 10,
                 ),
-                Text('Ro 50.000',
+                Text(formatRupiah(widget.harga),
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               ],
@@ -309,7 +314,8 @@ class _PembayaranState extends State<Pembayaran> {
               title: "Lanjutkan",
               onpressed: () {
                 if (isPayment) {
-                  widget.onpress();
+                  String bank = bankList[indexBank]['name'];
+                  widget.onpress(bank);
                 } else {
                   setState(() {
                     isPayment = true;

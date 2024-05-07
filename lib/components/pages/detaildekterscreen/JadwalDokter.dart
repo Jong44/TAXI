@@ -6,12 +6,14 @@ class JadwalDokter extends StatefulWidget {
   final hariList;
   final waktuList;
   final layananList;
+  final dateList;
   final Function onpressed;
   final Function(Map<String, dynamic>) onSelectedtanggal;
   final Function(Map<String, dynamic>) onSelectedwaktu;
   final Function(Map<String, dynamic>) onSelectedlayanan;
   const JadwalDokter(
       {super.key,
+      required this.dateList,
       required this.onpressed,
       required this.layananList,
       required this.waktuList,
@@ -67,6 +69,7 @@ class _JadwalDokterState extends State<JadwalDokter> {
                       Map<String, dynamic> data = {
                         "tanggal": widget.tanggalList[index],
                         "hari": widget.hariList[index],
+                        "date": widget.dateList[index],
                       };
                       widget.onSelectedtanggal(data);
                       setState(() {

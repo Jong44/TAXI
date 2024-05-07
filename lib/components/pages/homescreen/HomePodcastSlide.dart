@@ -7,7 +7,7 @@ class HomePodcastSlide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.only(left: 20, top: 5, bottom: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class HomePodcastSlide extends StatelessWidget {
             ],
           ),
           Container(
-            height: 150,
+            height: 160,
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: 2,
@@ -40,8 +40,8 @@ class HomePodcastSlide extends StatelessWidget {
                   return Row(
                     children: [
                       Container(
-                          width: 310,
-                          height: 150,
+                          width: 270,
+                          height: 160,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -58,7 +58,7 @@ class HomePodcastSlide extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
+                                      horizontal: 10, vertical: 10),
                                   decoration: BoxDecoration(
                                     color: Color(0xff173b34),
                                     borderRadius: BorderRadius.vertical(
@@ -94,8 +94,8 @@ class HomePodcastSlide extends StatelessWidget {
                                       onTap: () {},
                                       child: Container(
                                         alignment: Alignment.center,
-                                        width: 40,
-                                        height: 40,
+                                        width: 25,
+                                        height: 25,
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Color(0xff009B4C)),

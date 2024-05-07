@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/auth/LoginScreen.dart';
 import 'package:taxi_app/pages/onboarding/FirstOnboarding.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => FirstOnboarding()));
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
   }
 

@@ -1,0 +1,59 @@
+[
+    {
+        "kategori" : "rendah",
+        "minPoint" : 0,
+        "maxPoint" : 6,
+        "potensi" : [
+            "Anda mungkin sesekali mengalami kecemasan dalam situasi tertentu.", 
+            "Gejala yang Anda alami tidak secara signifikan mengganggu kehidupan sehari-hari."
+        ],
+        "saran" : [
+            "Terapkan teknik relaksasi seperti meditasi atau yoga untuk membantu menjaga keseimbangan mental.",
+            "Jaga pola hidup sehat dengan berolahraga teratur, makan makanan bergizi, dan cukup tidur untuk meningkatkan ketahanan mental.",
+            "Gunakan fitur jurnal dalam aplikasi ini untuk melacak pikiran dan perasaan Anda untuk meningkatkan kesadaran diri."
+        ]
+    },
+    {
+        "kategori" : "sedang",
+        "minPoint" : 7,
+        "maxPoint" : 12,
+        "potensi" : [
+            "Anda mungkin lebih sering mengalami kecemasan dalam berbagai situasi.",
+            "Gejala yang Anda alami bisa mengganggu beberapa aspek kehidupan sehari-hari."
+        ],
+        "saran" : [
+            "Gunakan fitur chat dengan ahli di aplikasi ini untuk mendapatkan panduan dan dukungan dari profesional kesehatan mental.",
+            "Pertimbangkan terapi perilaku kognitif (CBT), yang terbukti efektif dalam mengelola kecemasan.",
+            "Pelajari teknik manajemen stres seperti mindfulness dan deep breathing untuk meningkatkan ketenangan."
+        ]
+    },
+    {
+        "kategori" : "tinggi",
+        "minPoint" : 13,
+        "maxPoint" : 18,
+        "potensi" : [
+            "Anda mungkin sering mengalami kecemasan yang lebih intens dan mengganggu hampir semua aspek kehidupan sehari-hari.",
+            "Gejala yang Anda alami bisa disertai dengan serangan panik atau fobia."
+        ],
+        "saran" : [
+            "Segera hubungi ahli kesehatan mental untuk mendapatkan diagnosis yang tepat dan rencana perawatan yang sesuai.",
+            "Pertimbangkan pengobatan dengan obat-obatan jika diperlukan.",
+            "Gunakan fitur chat dengan ahli di aplikasi ini untuk mendapatkan dukungan dan bimbingan berkelanjutan."
+        ]
+    },
+    {
+        "kategori" : "sangat tinggi",
+        "minPoint" : 19,
+        "maxPoint" : 24,
+        "potensi" : [
+            "Anda mungkin hampir selalu mengalami kecemasan yang sangat parah dan melumpuhkan.",
+            "Gejala yang Anda alami secara signifikan mengganggu semua aspek kehidupan sehari-hari.",
+            " Anda mungkin memiliki pikiran untuk bunuh diri atau melukai diri sendiri."
+        ],
+        "saran" : [
+            "Segera mencari bantuan medis darurat.",
+            "Hubungi hotline kesehatan mental atau pergi ke ruang gawat darurat terdekat.",
+            "Izinkan orang terdekat untuk membantu Anda."
+        ]
+    }
+]

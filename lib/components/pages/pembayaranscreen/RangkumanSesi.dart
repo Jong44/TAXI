@@ -5,12 +5,23 @@ import 'package:iconify_flutter/icons/fluent_emoji_high_contrast.dart';
 import 'package:iconify_flutter/icons/fluent_mdl2.dart';
 import 'package:iconify_flutter/icons/tabler.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/utils/formatRupiah.dart';
 
 class RangkumanSesi extends StatefulWidget {
   final Map<String, dynamic> dataPesanan;
+  final String nama;
+  final List kategori;
+  final String fotoProfil;
+  final int harga;
   final Function onPilih;
   const RangkumanSesi(
-      {super.key, required this.dataPesanan, required this.onPilih});
+      {super.key,
+      required this.dataPesanan,
+      required this.onPilih,
+      required this.nama,
+      required this.kategori,
+      required this.fotoProfil,
+      required this.harga});
 
   @override
   State<RangkumanSesi> createState() => _RangkumanSesiState();
@@ -48,13 +59,13 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
           Row(
             children: [
               Container(
-                width: 90,
-                height: 90,
+                width: 80,
+                height: 80,
                 decoration: BoxDecoration(
                     color: Colors.grey.shade300,
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage(widget.dataPesanan["image"]),
+                        image: NetworkImage(widget.fotoProfil),
                         fit: BoxFit.cover)),
               ),
               SizedBox(
@@ -63,22 +74,22 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.dataPesanan["nama"],
+                  Text(widget.nama,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                   SizedBox(
                     height: 10,
                   ),
                   Container(
-                    width: 200,
+                    width: 185,
                     child: Wrap(
                       spacing: 7,
                       runSpacing: 10,
                       children: List.generate(
-                        4,
+                        widget.kategori.length,
                         (index) => Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
                               color: Color(0xffF0F4FF),
                               borderRadius: BorderRadius.circular(20),
@@ -86,12 +97,11 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
                                   width: 0.8, color: Color(0xff235347))),
                           child: Text(
                             index < 3
-                                ? widget.dataPesanan["kategori"][index]
+                                ? widget.kategori[index]
                                 : "+ " +
-                                    (widget.dataPesanan['kategori'].length - 3)
-                                        .toString() +
+                                    (widget.kategori.length - 3).toString() +
                                     " Lainnya",
-                            style: TextStyle(color: Colors.black, fontSize: 10),
+                            style: TextStyle(color: Colors.black, fontSize: 9),
                           ),
                         ),
                       ),
@@ -264,7 +274,7 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
           ),
           Row(
             children: [
-              Text("Rp 200.000",
+              Text(formatRupiah(widget.harga),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -275,7 +285,11 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
               Expanded(
                   child: MainButton(
                 title: "Pilih",
-                onpressed: () => widget.onPilih(),
+                onpressed: () {
+                  widget.dataPesanan["durasi"] = durasi[indexDurasi];
+                  widget.dataPesanan["media"] = media[indexMedia]["title"];
+                  widget.onPilih(widget.dataPesanan);
+                },
                 borderRadius: 10.0,
               )),
             ],

@@ -81,31 +81,6 @@ class SelesaiPembayaran extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Detail Sesi",
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          CupertinoIcons.chevron_right_circle_fill,
-                          size: 20,
-                          color: Color(0xff235347),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
             ],
           ),
         ),

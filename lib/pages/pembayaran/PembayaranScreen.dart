@@ -1,11 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/pages/pembayaranscreen/Pembayaran.dart';
 import 'package:taxi_app/components/pages/pembayaranscreen/RangkumanSesi.dart';
 import 'package:taxi_app/components/pages/pembayaranscreen/SelesaiPembayaran.dart';
+import 'package:taxi_app/models/BookingModel.dart';
+import 'package:taxi_app/models/DokterModel.dart';
+import 'package:taxi_app/models/ProfileModel.dart';
+import 'package:taxi_app/services/BookingService.dart';
+import 'package:taxi_app/services/ProfileServices.dart';
 
 class PembayaranScreen extends StatefulWidget {
   final Map<String, dynamic> dataPesanan;
-  const PembayaranScreen({super.key, required this.dataPesanan});
+  final DokterModel dokter;
+  const PembayaranScreen(
+      {super.key, required this.dataPesanan, required this.dokter});
 
   @override
   State<PembayaranScreen> createState() => _PembayaranScreenState();
@@ -14,12 +23,34 @@ class PembayaranScreen extends StatefulWidget {
 class _PembayaranScreenState extends State<PembayaranScreen> {
   List<String> tabList = ["Rangkuman Sesimu", "Pembayaran", "Selesai"];
   int indexTab = 0;
+  Map<String, dynamic> dataBook = {};
+  ProfileModel profile = ProfileModel(
+    nama: "",
+    tanggalLahir: "",
+    jenisKelamin: "",
+    nomorTelepon: "",
+    alamatEmail: "",
+    fotoProfil: "",
+  );
+
+  Future<void> tambahRiwayatTransaksi(BookingModel book) async {
+    BookingService bookingService = BookingService();
+    await bookingService.tambahRiwayatTransaksi(book);
+  }
+
+  Future<void> getProfiel() async {
+    ProfileService profileService = ProfileService();
+    String dataProfile = await profileService.getData();
+    setState(() {
+      profile = ProfileModel.fromJson(jsonDecode(dataProfile));
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.dataPesanan);
+    getProfiel();
   }
 
   @override
@@ -96,18 +127,37 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               ),
               indexTab == 0
                   ? RangkumanSesi(
+                      nama: widget.dokter.nama,
+                      fotoProfil: widget.dokter.fotoProfil,
+                      kategori: widget.dokter.kategori,
+                      harga: widget.dokter.harga,
                       dataPesanan: widget.dataPesanan,
-                      onPilih: () {
+                      onPilih: (Map<String, dynamic> data) {
                         setState(() {
+                          dataBook = data;
                           indexTab += 1;
                         });
                       },
                     )
                   : indexTab == 1
                       ? Pembayaran(
+                          harga: widget.dokter.harga,
                           dataPesanan: widget.dataPesanan,
-                          onpress: () {
+                          onpress: (String metodePembayaran) {
                             setState(() {
+                              BookingModel book = BookingModel(
+                                  date: widget.dataPesanan['date'],
+                                  waktu: widget.dataPesanan['waktu'],
+                                  layanan: widget.dataPesanan['layanan'],
+                                  dokter: widget.dokter,
+                                  user: profile,
+                                  durasi: widget.dataPesanan['durasi'] ?? 0,
+                                  mediaKonseling:
+                                      widget.dataPesanan['mediaKonseling'] ??
+                                          "",
+                                  metodePembayaran: metodePembayaran ?? "");
+
+                              tambahRiwayatTransaksi(book);
                               indexTab += 1;
                             });
                           },

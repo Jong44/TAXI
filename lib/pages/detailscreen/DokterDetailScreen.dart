@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/pages/detaildekterscreen/JadwalDokter.dart';
 import 'package:taxi_app/components/pages/detaildekterscreen/RiwayatDokter.dart';
+import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/pages/pembayaran/PembayaranScreen.dart';
 
 class DokterDetailScreen extends StatefulWidget {
-  const DokterDetailScreen({super.key});
+  final DokterModel dokter;
+  const DokterDetailScreen({super.key, required this.dokter});
 
   @override
   State<DokterDetailScreen> createState() => _DokterDetailScreenState();
@@ -15,6 +17,8 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
   List listTab = ["Jadwal Konsultasi", "Riwayat"];
   List<String> tanggalList = [];
   List<String> hariList = [];
+  List<String> dateList = [];
+  Map<String, dynamic> onSelected = {};
 
   List<String> getTanggal() {
     DateTime now = DateTime.now();
@@ -22,11 +26,12 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
       DateTime tanggal = now.add(Duration(days: i));
       tanggalList.add(tanggal.day.toString());
       hariList.add(_getHari(tanggal.weekday));
+      dateList.add(DateTime(tanggal.year, tanggal.month, tanggal.day)
+          .toString()
+          .substring(0, 10));
     }
     return tanggalList;
   }
-
-  Map<String, dynamic> onSelected = {};
 
   String _getHari(int weekday) {
     switch (weekday) {
@@ -82,6 +87,7 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text("Detail Dokter",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
         ),
@@ -97,7 +103,7 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                       color: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                          image: AssetImage("assets/dokter1.png"),
+                          image: NetworkImage(widget.dokter.fotoProfil),
                           fit: BoxFit.cover)),
                 ),
                 SizedBox(
@@ -154,6 +160,7 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                         onSelectedtanggal: (Map<String, dynamic> data) {
                           onSelected['tanggal'] = data['tanggal'];
                           onSelected['hari'] = data['hari'];
+                          onSelected['date'] = data['date'];
                         },
                         onSelectedwaktu: (Map<String, dynamic> data) {
                           setState(() {
@@ -169,11 +176,9 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                         layananList: layananaList,
                         tanggalList: tanggalList,
                         hariList: hariList,
+                        dateList: dateList,
                         onpressed: () {
                           setState(() {
-                            onSelected['kategori'] = kategoriDokter;
-                            onSelected['nama'] = "Marisca Kusuma, M.Psi";
-                            onSelected['image'] = "assets/dokter1.png";
                             if (onSelected['waktu'] == null ||
                                 onSelected['layanan'] == null ||
                                 onSelected['tanggal'] == null) {
@@ -181,17 +186,24 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                               onSelected['layanan'] = layananaList[0];
                               onSelected['tanggal'] = tanggalList[0];
                               onSelected['hari'] = hariList[0];
+                              onSelected['date'] = dateList[0];
                             }
                           });
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PembayaranScreen(
-                                      dataPesanan: onSelected)));
+                                        dataPesanan: onSelected,
+                                        dokter: widget.dokter,
+                                      )));
                         },
                       )
                     : RiwayatDokter(
-                        kategori: kategoriDokter,
+                        nama: widget.dokter.nama,
+                        ahli: widget.dokter.ahli,
+                        pendidikan: widget.dokter.pendidikan,
+                        sipp: widget.dokter.sipp,
+                        kategori: widget.dokter.kategori,
                       ),
                 SizedBox(
                   height: 20,

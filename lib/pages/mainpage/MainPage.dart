@@ -22,23 +22,40 @@ class _MainPageState extends State<MainPage> {
   List Menu = [
     {
       "title": "Home",
-      "icon": Icon(Icons.home),
+      "icon": Icon(
+        Icons.home,
+        color: Color(0x000000).withOpacity(0.4),
+      ),
+      "iconActive": Icon(
+        Icons.home,
+        color: Color(0xff235347),
+      ),
     },
     {
       "title": "Dokter",
-      "icon": Iconify(Healthicons.call_centre),
+      "icon": Iconify(
+        Healthicons.call_centre,
+        color: Color(0x000000).withOpacity(0.4),
+      ),
+      "iconActive": Iconify(
+        Healthicons.call_centre,
+        color: Color(0xff235347),
+      ),
     },
     {
       "title": "Chatbot",
-      "icon": Iconify(FluentEmojiHighContrast.a_button_blood_type),
+      "icon": Iconify(Mdi.robot, color: Color(0x000000).withOpacity(0.4)),
+      "iconActive": Iconify(Mdi.robot, color: Color(0xff235347)),
     },
     {
       "title": "Transaksi",
-      "icon": Iconify(Mdi.chart_box),
+      "icon": Iconify(Mdi.chart_box, color: Color(0x000000).withOpacity(0.4)),
+      "iconActive": Iconify(Mdi.chart_box, color: Color(0xff235347)),
     },
     {
       "title": "Profile",
-      "icon": Icon(Icons.person),
+      "icon": Icon(Icons.person, color: Color(0x000000).withOpacity(0.4)),
+      "iconActive": Icon(Icons.person, color: Color(0xff235347)),
     },
   ];
 
@@ -68,6 +85,10 @@ class _MainPageState extends State<MainPage> {
             children: List.generate(
                 Menu.length,
                 (index) => InkWell(
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () {
                         handleChangeScreen(index);
                       },
@@ -75,7 +96,9 @@ class _MainPageState extends State<MainPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Menu[index]['icon'],
+                          indexScreen == index
+                              ? Menu[index]['iconActive']
+                              : Menu[index]['icon'],
                           SizedBox(
                             height: 5,
                           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/pages/teskesehatan/start_tes.dart';
 
 class CardTes extends StatelessWidget {
   const CardTes({super.key});
@@ -51,7 +52,12 @@ class CardTes extends StatelessWidget {
                 child: MainButton(
                   borderRadius: 50.0,
                   title: "Mulai",
-                  onpressed: () {},
+                  onpressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => StartTestKesehatan()));
+                  },
                 ),
               )
             ],

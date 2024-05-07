@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/RatingStar.dart';
+import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/pages/detailscreen/DokterDetailScreen.dart';
 
 class SliderFastPsikolog extends StatelessWidget {
-  SliderFastPsikolog({super.key});
+  final List<DokterModel> dokterList;
+  SliderFastPsikolog({super.key, required this.dokterList});
 
   List Categori = ["Pekerjaan", "Keluarga", "Percintaan", "Kendali Emosi"];
 
@@ -24,7 +26,7 @@ class SliderFastPsikolog extends StatelessWidget {
             child: ListView.builder(
                 padding: EdgeInsets.all(5),
                 scrollDirection: Axis.horizontal,
-                itemCount: 2,
+                itemCount: dokterList.length,
                 itemBuilder: (context, index) {
                   return Row(
                     children: [
@@ -33,7 +35,8 @@ class SliderFastPsikolog extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DokterDetailScreen()));
+                                  builder: (context) => DokterDetailScreen(
+                                      dokter: dokterList[index])));
                         },
                         child: Container(
                           padding: EdgeInsets.all(10),
@@ -57,6 +60,10 @@ class SliderFastPsikolog extends StatelessWidget {
                                 Container(
                                   height: 130,
                                   decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              dokterList[index].fotoProfil),
+                                          fit: BoxFit.cover),
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.grey.shade200),
                                 ),
@@ -64,8 +71,10 @@ class SliderFastPsikolog extends StatelessWidget {
                                   height: 7,
                                 ),
                                 Text(
-                                  "Erika Issabela, M. Psi",
+                                  dokterList[index].nama,
+                                  maxLines: 1,
                                   style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 11),
                                 ),
@@ -73,7 +82,7 @@ class SliderFastPsikolog extends StatelessWidget {
                                   height: 2,
                                 ),
                                 Text(
-                                  "Psikolog",
+                                  dokterList[index].ahli,
                                   style: TextStyle(fontSize: 9),
                                 ),
                                 SizedBox(
@@ -88,9 +97,10 @@ class SliderFastPsikolog extends StatelessWidget {
                                     spacing: 5,
                                     runSpacing: 5,
                                     children: List.generate(
-                                      Categori.length,
+                                      dokterList[index].kategori.length,
                                       (index) {
-                                        final text = Categori[index];
+                                        final text =
+                                            dokterList[index].kategori[index];
 
                                         return Container(
                                           decoration: BoxDecoration(

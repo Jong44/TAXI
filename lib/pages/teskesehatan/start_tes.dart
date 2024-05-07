@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/teskesehatan/SoalTesPage.dart';
 import 'package:taxi_app/pages/teskesehatan/skor.dart';
 
-class start_tes extends StatelessWidget {
-  const start_tes({super.key});
+class StartTestKesehatan extends StatelessWidget {
+  const StartTestKesehatan({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +57,8 @@ class start_tes extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => skor()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SoalTesPage()));
               },
               child: Text(
                 "Mulai",
