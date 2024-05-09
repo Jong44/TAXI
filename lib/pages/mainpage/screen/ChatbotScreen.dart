@@ -46,10 +46,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   }
 
   Future<void> sendMessage() async {
+    setState(() {
+      isLoading = true;
+    });
     ChatbotService chatbotService = ChatbotService();
     await chatbotService.sendMessage(textController.text);
 
     setState(() {
+      isLoading = false;
       textController.text = "";
     });
     _scrollToBottom();
@@ -104,7 +108,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "TAXBOT",
+                "OLAF",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -228,17 +232,18 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            setState(() {
+                            if (isLoading == false) {
                               sendMessage();
-                            });
+                            }
                           },
                           child: Container(
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color(0xff235347),
-                            ),
+                                borderRadius: BorderRadius.circular(10),
+                                color: isLoading == true
+                                    ? Color.fromRGBO(0, 0, 0, 0.2)
+                                    : Color(0xff235347)),
                             child: Icon(
                               Icons.send,
                               color: Colors.white,
@@ -265,7 +270,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
               startWithTextPress: () {
                 ChatbotService().createThreads();
                 setState(() {
-                  textController.text = "Hai Bot, Saya Ingin Bantuan";
+                  textController.text = "Hallooo Olaff, aku butuh bantuan nih";
                   Timer(Duration(seconds: 2), () {
                     setState(() {
                       isStart = true;

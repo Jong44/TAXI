@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/detailpodcast/DetailPodcast.dart';
 
 class HomePodcastSlide extends StatelessWidget {
-  const HomePodcastSlide({super.key});
+  final List podcast;
+  const HomePodcastSlide({super.key, required this.podcast});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class HomePodcastSlide extends StatelessWidget {
             height: 160,
             child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: 2,
+                itemCount: podcast.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Row(
@@ -51,6 +53,10 @@ class HomePodcastSlide extends StatelessWidget {
                                 width: double.infinity,
                                 height: 110,
                                 decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            podcast[index]['thumbnail']),
+                                        fit: BoxFit.cover),
                                     borderRadius: BorderRadius.vertical(
                                         top: Radius.circular(20)),
                                     color: Colors.grey.shade300),
@@ -71,14 +77,15 @@ class HomePodcastSlide extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Mood Cepat Berubah Apakah Bipolar?",
+                                            "${podcast[index]['title']}",
                                             style: TextStyle(
+                                                overflow: TextOverflow.ellipsis,
                                                 fontSize: 11,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
-                                            "30 Menit",
+                                            "${podcast[index]['time']} Menit",
                                             style: TextStyle(
                                               fontSize: 9,
                                               color: Colors.white,
@@ -91,7 +98,15 @@ class HomePodcastSlide extends StatelessWidget {
                                       width: 10,
                                     ),
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailPodcast(
+                                                      podcast: podcast[index],
+                                                    )));
+                                      },
                                       child: Container(
                                         alignment: Alignment.center,
                                         width: 25,

@@ -70,7 +70,7 @@ class EmojisCard extends StatelessWidget {
           children: [
             Text(
               "Hai Bagaimana Perasaanmu Hai Ini ? ",
-              style: TextStyle(letterSpacing: 0.5, fontWeight: FontWeight.w500),
+              style: TextStyle(letterSpacing: 0.5, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 20,

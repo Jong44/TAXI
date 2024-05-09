@@ -22,7 +22,7 @@ class WelcomeChat extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "Welcome to \n TAXBOT",
+                  "Hallo, Aku \n OLAF",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 23,
@@ -49,7 +49,7 @@ class WelcomeChat extends StatelessWidget {
                 bgColor: Color.fromRGBO(0, 0, 0, 0.2),
                 textColor: Colors.black,
                 borderRadius: 10.0,
-                title: "Hai Bot, Saya ingin Bantuan",
+                title: "Hallo Olaf, aku butuh Bantuan",
                 onpressed: startWithTextPress,
               ),
               SizedBox(

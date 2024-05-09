@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatbotRepository {
-  String url = 'https://d191-182-2-40-241.ngrok-free.app';
+  String url = 'https://taxiweb-production-500a.up.railway.app';
 
   Future<String> getAllMessage(String threads) async {
     final response = await http.get(

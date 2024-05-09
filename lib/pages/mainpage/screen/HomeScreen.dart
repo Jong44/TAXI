@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<DokterModel> dokter = [];
   List<dynamic> blog = [];
+  List<dynamic> podcast = [];
 
   Future loadPointToday() async {
     MoodTrackerService moodTrackerService = MoodTrackerService();
@@ -45,6 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
         point = value;
       });
     });
+  }
+
+  Future loadPodcast() async {
+    String jsonString = await rootBundle.loadString('assets/data/PupAss.json');
+    List<dynamic> jsonData = jsonDecode(jsonString);
+    return jsonData.map((data) => data).toList();
   }
 
   int point = 0;
@@ -61,6 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
     loadJsonBlogData().then((value) {
       setState(() {
         blog = value;
+      });
+    });
+    loadPodcast().then((value) {
+      setState(() {
+        podcast = value;
       });
     });
 
@@ -94,7 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 5,
             ),
-            // HomePodcastSlide(),
+            HomePodcastSlide(
+              podcast: podcast,
+            ),
             SizedBox(
               height: 5,
             ),

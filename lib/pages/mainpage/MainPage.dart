@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
       ),
     },
     {
-      "title": "Dokter",
+      "title": "Konsul",
       "icon": Iconify(
         Healthicons.call_centre,
         color: Color(0x000000).withOpacity(0.4),
