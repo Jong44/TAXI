@@ -1,0 +1,103 @@
+[
+  {
+    "nama": "Dr. dr. Rina Wijaya, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Depresi", "Kecemasan"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 1357924,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fhappy-positive-mature-doctor-woman-600nw-2339461871.webp?alt=media&token=0b98738f-f53d-4936-8fcb-04761c474d77",
+    "harga": 500000,
+    "pengalaman": 3
+  },
+  {
+    "nama": "Dr. dr. Dian Pratama, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Stres", "Trauma"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 2468135,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fprofile-picture-smiling-young-caucasian-600nw-1868484697.webp?alt=media&token=bd93a193-d68b-4ccc-ae63-8d6ad1a2fd65",
+    "harga": 500000,
+    "pengalaman": 5
+  },
+  {
+    "nama": "Dr. dr. Siti Rahayu, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Skizofrenia", "Bipolar"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 3579246,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fhappy-positive-mature-doctor-woman-600nw-2339461871.webp?alt=media&token=0b98738f-f53d-4936-8fcb-04761c474d77",
+    "harga": 500000,
+    "pengalaman": 7
+  },
+  {
+    "nama": "Dr. dr. Bambang Susanto, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "OCD", "Fobia"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 4680357,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fhappy-positive-mature-doctor-woman-600nw-2339461871.webp?alt=media&token=0b98738f-f53d-4936-8fcb-04761c474d77",
+    "harga": 500000,
+    "pengalaman": 9
+  },
+  {
+    "nama": "Dr. dr. Maya Sari, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Gangguan Makan", "Gangguan Kepribadian"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 5791468,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fhappy-positive-mature-doctor-woman-600nw-2339461871.webp?alt=media&token=0b98738f-f53d-4936-8fcb-04761c474d77",
+    "harga": 200000,
+    "pengalaman": 2
+  },
+  {
+    "nama": "Dr. dr. Andi Wijaya, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Depresi", "Kecemasan"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 6802579,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fprofile-picture-smiling-young-caucasian-600nw-1868484697.webp?alt=media&token=bd93a193-d68b-4ccc-ae63-8d6ad1a2fd65",
+    "harga": 200000,
+    "pengalaman": 4
+  },
+  {
+    "nama": "Dr. dr. Rudi Pratama, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Stres", "Trauma"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 7913690,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fhappy-positive-mature-doctor-woman-600nw-2339461871.webp?alt=media&token=0b98738f-f53d-4936-8fcb-04761c474d77",
+    "harga": 200000,
+    "pengalaman": 6
+  },
+  {
+    "nama": "Dr. dr. Santi Rahayu, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Skizofrenia", "Bipolar"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 9024801,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fhappy-positive-mature-doctor-woman-600nw-2339461871.webp?alt=media&token=0b98738f-f53d-4936-8fcb-04761c474d77",
+    "harga": 300000,
+    "pengalaman": 8
+  },
+  {
+    "nama": "Dr. dr. Budi Susanto, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "OCD", "Fobia"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 135912,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fprofile-picture-smiling-young-caucasian-600nw-1868484697.webp?alt=media&token=bd93a193-d68b-4ccc-ae63-8d6ad1a2fd65",
+    "harga": 300000,
+    "pengalaman": 10
+  },
+  {
+    "nama": "Dr. dr. Rina Sari, Sp.KJ",
+    "ahli": "Psikiater",
+    "kategori": ["Gangguan Mental", "Gangguan Makan", "Gangguan Kepribadian"],
+    "pendidikan": ["S1 Kedokteran", "S2 Psikiatri", "S3 Psikiatri"],
+    "sipp": 1247023,
+    "fotoProfil": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/dokter%2Fhappy-positive-mature-doctor-woman-600nw-2339461871.webp?alt=media&token=0b98738f-f53d-4936-8fcb-04761c474d77",
+    "harga": 300000,
+    "pengalaman": 1
+  }
+
+]

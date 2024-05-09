@@ -1,0 +1,23 @@
+[
+    {
+        "title" : "Mental Health di Kalangan Milenial",
+        "publisher" : "Universitas Gadjah Mada",
+        "time" : "20.07",
+        "thumbnail" : "https://i.ytimg.com/vi/1j8Zg6YX2ZM/maxresdefault.jpg",
+        "path" : "assets/poopass/podcast1.mp3"
+    },
+    {
+        "title" : "Mengenal Gejala Dini Gangguan Mental Emosional",
+        "publisher" : "Rumah Sakit USU",
+        "time" : "26.12",
+        "thumbnail" : "https://i.ytimg.com/vi/1j8Zg6YX2ZM/maxresdefault.jpg",
+        "path" : "assets/poopass/podcast2.mp3"
+    },
+    {
+        "title" : "PHUBBING DAN KESEHATAN MENTAL REMAJA",
+        "publisher" : "RSUD Hj. Anna Lasmanah",
+        "time" : "58.29",
+        "thumbnail" : "https://i.ytimg.com/vi/1j8Zg6YX2ZM/maxresdefault.jpg",
+        "path" : "assets/poopass/podcast3.mp3"
+    }
+]

@@ -12,7 +12,11 @@ class pembayaran3 extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(
-                context, MaterialPageRoute(builder: (context) => skor()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => skor(
+                          jumlahPoint: 1,
+                        )));
           },
           icon: Icon(Icons.arrow_back),
         ),

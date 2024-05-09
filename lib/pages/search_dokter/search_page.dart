@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:taxi_app/pages/notifikasi/notif.dart';
+import 'package:taxi_app/pages/search_dokter/ListSearchPage.dart';
 
 class search_page extends StatefulWidget {
   const search_page({super.key});
@@ -11,6 +12,7 @@ class search_page extends StatefulWidget {
 
 class _search_pageState extends State<search_page> {
   List kategori = [
+    {"kategori": "Gangguan Mental", "status": false},
     {"kategori": "Kecemasan", "status": false},
     {"kategori": "Panik", "status": false},
     {"kategori": "Percintaan", "status": false},
@@ -21,10 +23,11 @@ class _search_pageState extends State<search_page> {
     {"kategori": "Pengembangan Diri", "status": false},
     {"kategori": "Stress", "status": false},
     {"kategori": "Pekerjaan", "status": false},
-    {"kategori": "Seksualitas", "status": false},
     {"kategori": "Kendali Emosi", "status": false},
     {"kategori": "ADHD", "status": false},
   ];
+
+  List listKategoriParams = [];
 
   TextEditingController search_control = TextEditingController();
 
@@ -35,6 +38,7 @@ class _search_pageState extends State<search_page> {
       kategori[index]['status'] = !kategori[index]['status'];
     });
     handleHitung(kategori[index]['status']);
+    handleListKategori();
   }
 
   void handleHitung(status) {
@@ -49,6 +53,17 @@ class _search_pageState extends State<search_page> {
     });
   }
 
+  void handleListKategori() {
+    setState(() {
+      listKategoriParams = [];
+      for (var i = 0; i < kategori.length; i++) {
+        if (kategori[i]['status']) {
+          listKategoriParams.add(kategori[i]['kategori']);
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,34 +75,54 @@ class _search_pageState extends State<search_page> {
             SizedBox(
               height: 60,
             ),
-            Container(
-              width: double.infinity,
-              height: 45,
-              decoration: BoxDecoration(
-                color: Color(0xfff5f5f5),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 45,
-                    height: 45,
-                    child: Icon(Icons.search),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    child: Icon(Icons.arrow_back),
                   ),
-                  Expanded(
-                      child: TextField(
-                    controller: search_control,
-                    onChanged: ((value) {
-                      setState(() {
-                        search_control.text = value;
-                      });
-                    }),
-                    style: TextStyle(fontSize: 13),
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "Search"),
-                  )),
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Color(0xfff5f5f5),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 45,
+                          height: 45,
+                          child: Icon(Icons.search),
+                        ),
+                        Expanded(
+                            child: TextField(
+                          controller: search_control,
+                          onChanged: ((value) {
+                            setState(() {
+                              search_control.text = value;
+                            });
+                          }),
+                          style: TextStyle(fontSize: 13),
+                          decoration: InputDecoration(
+                              border: InputBorder.none, hintText: "Search"),
+                        )),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 20,
@@ -105,7 +140,7 @@ class _search_pageState extends State<search_page> {
                           decoration: BoxDecoration(
                               color: kategori[index]['status']
                                   ? Color(0xff235347)
-                                  : Color(0xffdddddd),
+                                  : Color(0xffdddddd).withOpacity(0.6),
                               borderRadius: BorderRadius.circular(10)),
                           padding:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -123,25 +158,21 @@ class _search_pageState extends State<search_page> {
             SizedBox(
               height: 50,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => notif()));
-                },
-                child: Text(
-                  "Next Page",
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff173b34),
-                    minimumSize: Size(double.infinity, 50))),
           ],
         ),
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 40),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ListSearchPage(
+                          params: search_control.text,
+                          listKategoriParams: listKategoriParams,
+                        )));
+          },
           child: Text("Lanjutkan",
               style: TextStyle(
                   color: jumlahStatusTrue > 0 || search_control.text != ""

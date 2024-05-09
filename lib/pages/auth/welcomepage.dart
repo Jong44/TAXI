@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/pages/mainpage/MainPage.dart';
 import 'package:taxi_app/pages/teskesehatan/start_tes.dart';
 
 class welcomepage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _welcomepageState extends State<welcomepage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => start_tes()));
+                    MaterialPageRoute(builder: (context) => MainPage()));
               },
               child: Text(
                 "Mulai Sekarang",

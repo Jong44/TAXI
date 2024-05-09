@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "teks": "Seberapa sering Anda merasa gelisah atau khawatir tentang hal-hal yang akan datang?"
+      },
+      {
+        "id": 2,
+        "teks": "Seberapa sering Anda merasa sulit untuk mengendalikan kekhawatiran atau rasa gelisah Anda?"
+      },
+      {
+        "id": 3,
+        "teks": "Seberapa sering Anda merasa tegang, gugup, atau cemas?"
+      },
+      {
+        "id": 4,
+        "teks": "Seberapa sering Anda merasa sangat khawatir tentang kesehatan Anda, keuangan, pekerjaan, atau hubungan Anda?"
+      },
+      {
+        "id": 5,
+        "teks": "Seberapa sering Anda merasa mudah tersinggung atau takut tanpa alasan yang jelas?"
+      },
+      {
+        "id": 6,
+        "teks": "Seberapa sering Anda merasa sulit untuk berkonsentrasi karena pikiran Anda terus-menerus memikirkan hal-hal yang membuat Anda khawatir?"
+      },
+      {
+        "id": 7,
+        "teks": "Seberapa sering Anda merasa gelisah atau tegang tanpa alasan yang jelas?"
+      },
+      {
+        "id": 8,
+        "teks": "Seberapa sering Anda merasa lelah atau memiliki kesulitan tidur karena kecemasan Anda?"
+      }
+]
