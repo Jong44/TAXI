@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_waveforms/flutter_audio_waveforms.dart';
+import 'package:taxi_app/components/global/MusicPlayer.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class DetailPodcast extends StatefulWidget {
   final Map podcast;
@@ -12,6 +14,26 @@ class DetailPodcast extends StatefulWidget {
 }
 
 class _DetailPodcastState extends State<DetailPodcast> {
+  late AudioPlayer player = AudioPlayer();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    player = AudioPlayer();
+    player.setReleaseMode(ReleaseMode.stop);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await player.setSource(AssetSource(widget.podcast['path']));
+      await player.resume();
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    player.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +57,10 @@ class _DetailPodcastState extends State<DetailPodcast> {
                     width: 170,
                     height: 170,
                     decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(widget.podcast['thumbnail']),
+                        fit: BoxFit.cover,
+                      ),
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.grey.shade300,
                     ),
@@ -60,82 +86,7 @@ class _DetailPodcastState extends State<DetailPodcast> {
                 SizedBox(
                   height: 20,
                 ),
-                Stack(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.grey.shade300,
-                      ),
-                    ),
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "00:00",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
-                    ),
-                    Text(
-                      widget.podcast['time'],
-                      style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 70,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.fast_rewind, size: 30),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    InkWell(
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Color(0xff173b34),
-                        ),
-                        child: Icon(
-                          Icons.play_arrow,
-                          size: 40,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.fast_forward, size: 30),
-                    ),
-                  ],
-                )
+                PlayerWidget(player: player)
               ],
             ),
           ),
