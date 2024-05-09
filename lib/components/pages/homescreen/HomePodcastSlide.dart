@@ -41,91 +41,102 @@ class HomePodcastSlide extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Row(
                     children: [
-                      Container(
-                          width: 270,
-                          height: 160,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                height: 110,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            podcast[index]['thumbnail']),
-                                        fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(20)),
-                                    color: Colors.grey.shade300),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailPodcast(
+                                        podcast: podcast[index],
+                                      )));
+                        },
+                        child: Container(
+                            width: 270,
+                            height: 160,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  height: 110,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff173b34),
-                                    borderRadius: BorderRadius.vertical(
-                                        bottom: Radius.circular(20)),
-                                  ),
-                                  child: Row(children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${podcast[index]['title']}",
-                                            style: TextStyle(
-                                                overflow: TextOverflow.ellipsis,
-                                                fontSize: 11,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            "${podcast[index]['time']} Menit",
-                                            style: TextStyle(
-                                              fontSize: 9,
-                                              color: Colors.white,
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              podcast[index]['thumbnail']),
+                                          fit: BoxFit.cover),
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20)),
+                                      color: Colors.grey.shade300),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff173b34),
+                                      borderRadius: BorderRadius.vertical(
+                                          bottom: Radius.circular(20)),
+                                    ),
+                                    child: Row(children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${podcast[index]['title']}",
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontSize: 11,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetailPodcast(
-                                                      podcast: podcast[index],
-                                                    )));
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        width: 25,
-                                        height: 25,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Color(0xff009B4C)),
-                                        child: Icon(
-                                          Icons.play_arrow,
-                                          size: 20,
-                                          color: Colors.white,
+                                            Text(
+                                              "${podcast[index]['time']} Menit",
+                                              style: TextStyle(
+                                                fontSize: 9,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    )
-                                  ]),
-                                ),
-                              )
-                            ],
-                          )),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailPodcast(
+                                                        podcast: podcast[index],
+                                                      )));
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: 25,
+                                          height: 25,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xff009B4C)),
+                                          child: Icon(
+                                            Icons.play_arrow,
+                                            size: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                                  ),
+                                )
+                              ],
+                            )),
+                      ),
                       SizedBox(
                         width: 10,
                       )
