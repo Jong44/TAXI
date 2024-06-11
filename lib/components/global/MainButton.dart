@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 
 class MainButton extends StatelessWidget {
   final title;
@@ -27,7 +28,7 @@ class MainButton extends StatelessWidget {
           elevation: 0,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius)),
-          backgroundColor: bgColor != null ? bgColor : Color(0xff173b34),
+          backgroundColor: bgColor != null ? bgColor : ColorConfig.primaryColor,
           minimumSize: Size(double.infinity, 50)),
     );
   }

@@ -22,7 +22,9 @@ class _DetailPodcastState extends State<DetailPodcast> {
     player = AudioPlayer();
     player.setReleaseMode(ReleaseMode.stop);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await player.setSource(AssetSource(widget.podcast['path']));
+      await player.setSource(UrlSource(
+        widget.podcast['audio'],
+      ));
       await player.resume();
     });
   }
@@ -58,7 +60,7 @@ class _DetailPodcastState extends State<DetailPodcast> {
                     height: 170,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(widget.podcast['thumbnail']),
+                        image: NetworkImage(widget.podcast['image']),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(20),

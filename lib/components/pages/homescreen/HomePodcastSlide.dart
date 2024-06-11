@@ -64,7 +64,7 @@ class HomePodcastSlide extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                              podcast[index]['thumbnail']),
+                                              podcast[index]['image']),
                                           fit: BoxFit.cover),
                                       borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(20)),

@@ -1,23 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bi.dart';
 import 'package:taxi_app/components/global/RatingStar.dart';
 import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/pages/detailscreen/DokterDetailScreen.dart';
+import 'package:taxi_app/utils/formatRupiah.dart';
 
 class HomeSlidePsikolog extends StatelessWidget {
   final List<DokterModel> dokter;
-  const HomeSlidePsikolog({super.key, required this.dokter});
+  HomeSlidePsikolog({super.key, required this.dokter});
 
-  String kategori(List<String> kategori) {
-    String fullKategori = '';
-    for (var i = 0; i < kategori.length; i++) {
-      fullKategori += kategori[i];
-      if (i != kategori.length - 1) {
-        fullKategori += ', ';
-      }
-    }
-    return fullKategori;
-  }
+  List<Color> colorCard = [
+    Color(0xffF28F8F),
+    Color(0xffF7CE45),
+    Color(0xff519FC5),
+    Color(0xffB16668),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +26,14 @@ class HomeSlidePsikolog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Rekomendasi Psikolog Terbaik",
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+            "Rekomendasi Ahli",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
           ),
           SizedBox(
             height: 10,
           ),
           Container(
-            height: 150,
+            height: 220,
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: dokter.length,
@@ -43,86 +42,108 @@ class HomeSlidePsikolog extends StatelessWidget {
                   return Row(
                     children: [
                       InkWell(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => DokterDetailScreen(
-                                      dokter: dokter[index])));
+                                        dokter: dokter[index],
+                                      )));
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 15),
-                          width: 310,
-                          height: 150,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  width: 1, color: Colors.grey.shade300)),
-                          child: Row(children: [
-                            Container(
-                              width: 100,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          dokter[index].fotoProfil),
-                                      fit: BoxFit.cover),
-                                  color: Colors.grey.shade300,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: SizedBox(),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            width: 170,
+                            height: 220,
+                            child: Stack(
                               children: [
-                                Text(
-                                  dokter[index].nama,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10)),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 125,
+                                          decoration: BoxDecoration(
+                                            color: colorCard[index % 4],
+                                          ),
+                                        )),
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Color(0xffE4E4E7)),
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight:
+                                                  Radius.circular(10))),
+                                      width: double.infinity,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Psikolog",
+                                            style: TextStyle(
+                                                overflow: TextOverflow.ellipsis,
+                                                fontSize: 12),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            dokter[index].nama,
+                                            style: TextStyle(
+                                                overflow: TextOverflow.ellipsis,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 11),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Divider(
+                                            color: Color(0xffE4E4E7),
+                                            height: 5,
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            formatRupiah(dokter[index].harga),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  dokter[index].ahli,
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                RatingStar(),
-                                Text(
-                                  kategori(dokter[index].kategori),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
+                                Positioned(
+                                  top: 0,
+                                  left: 0,
                                   child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff173b34),
-                                        shape: BoxShape.circle),
-                                    child: Icon(
-                                      CupertinoIcons.arrow_right,
-                                      color: Colors.white,
-                                      size: 15,
-                                    ),
-                                  ),
-                                )
+                                      margin: EdgeInsets.all(7),
+                                      padding: EdgeInsets.all(5),
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: Color(0xffE4E4E7)),
+                                      ),
+                                      child: Iconify(
+                                        Bi.heart,
+                                      )),
+                                ),
                               ],
-                            ))
-                          ]),
-                        ),
+                            )),
                       ),
                       SizedBox(
                         width: 10,

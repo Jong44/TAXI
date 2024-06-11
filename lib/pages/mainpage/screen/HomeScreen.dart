@@ -11,7 +11,9 @@ import 'package:taxi_app/components/pages/homescreen/HomePodcastSlide.dart';
 import 'package:taxi_app/components/pages/homescreen/HomeSlideDokter.dart';
 import 'package:taxi_app/components/pages/homescreen/SlidePromo.dart';
 import 'package:taxi_app/models/DokterModel.dart';
+import 'package:taxi_app/services/ArtikelService.dart';
 import 'package:taxi_app/services/MoodTrackerService.dart';
+import 'package:taxi_app/services/PodcastService.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,12 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return jsonData.map((data) => DokterModel.fromJson(data)).toList();
   }
 
-  Future<List<dynamic>> loadJsonBlogData() async {
-    String jsonString = await rootBundle.loadString('assets/data/blogs.json');
-    List<dynamic> jsonData = jsonDecode(jsonString);
-    return jsonData.map((data) => data).toList();
-  }
-
   List<DokterModel> dokter = [];
   List<dynamic> blog = [];
   List<dynamic> podcast = [];
@@ -48,35 +44,30 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future loadPodcast() async {
-    String jsonString = await rootBundle.loadString('assets/data/PupAss.json');
-    List<dynamic> jsonData = jsonDecode(jsonString);
-    return jsonData.map((data) => data).toList();
-  }
-
   int point = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    loadPointToday();
     loadJsonData().then((value) {
       setState(() {
         dokter = value.sublist(0, 4);
       });
     });
-    loadJsonBlogData().then((value) {
-      setState(() {
-        blog = value;
-      });
-    });
-    loadPodcast().then((value) {
+    PodcastService().getPodcast().then((value) {
       setState(() {
         podcast = value;
       });
+      print(podcast);
     });
-
-    loadPointToday();
+    ArtikelService().getArtikel().then((value) {
+      setState(() {
+        blog = value;
+      });
+      print(blog);
+    });
   }
 
   @override
@@ -89,23 +80,23 @@ class _HomeScreenState extends State<HomeScreen> {
             AppBarHome(
               searchController: searchController,
             ),
+            SizedBox(
+              height: 15,
+            ),
             EmojisCard(
               point: point,
             ),
-            SizedBox(
-              height: 5,
-            ),
             CardTes(),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
-            SlidePromo(),
             HomeSlidePsikolog(
               dokter: dokter,
             ),
             SizedBox(
               height: 5,
             ),
+            SlidePromo(),
             HomePodcastSlide(
               podcast: podcast,
             ),

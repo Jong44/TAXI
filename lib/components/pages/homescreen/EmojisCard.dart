@@ -50,7 +50,7 @@ class EmojisCard extends StatelessWidget {
             MaterialPageRoute(builder: (context) => MainMoodTracker()));
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         padding: EdgeInsets.symmetric(vertical: 7, horizontal: 20),
         height: 140,
         decoration: BoxDecoration(
