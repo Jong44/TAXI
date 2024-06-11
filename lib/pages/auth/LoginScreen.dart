@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:taxi_app/components/global/MainButton.dart';
-import 'package:taxi_app/components/global/MainInputPassword.dart';
-import 'package:taxi_app/components/global/MainInputText.dart';
-import 'package:taxi_app/pages/mainpage/MainPage.dart';
-import 'package:taxi_app/pages/mainpage/screen/HomeScreen.dart';
+import 'package:taxi_app/components/global/TextFieldMain.dart';
+import 'package:taxi_app/pages/auth/regist.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,87 +10,92 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-  bool isObsecure = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
           children: [
-            Container(
-              height: 210,
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(50)),
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xff235347), Color(0xff153832)])),
-              child: Center(
-                child: Image.asset(
-                  "assets/logo_white.png",
-                  width: 80,
-                ),
+            SizedBox(
+              height: 70,
+            ),
+            Center(
+              child: Image.asset(
+                "assets/taca/logo.png",
+                width: 100,
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 70,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: MainInputText(
-                title: "Email",
-                prefixIcon: Icon(
-                  Icons.mail_outlined,
-                  size: 20,
-                ),
-                placeholder: "example@gmail.com",
-                inputController: emailController,
-              ),
+            Row(
+              children: [
+                Text(
+                  "Email Or Mobile Number",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                )
+              ],
             ),
             SizedBox(
-              height: 30,
+              height: 7,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: MainInputPassword(
-                obsecure: isObsecure,
-                title: "Password",
-                placeholder: "********",
-                inputController: emailController,
-                pressObsecure: () {
-                  setState(() {
-                    isObsecure = !isObsecure;
-                  });
-                },
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child:
-                  TextButton(onPressed: () {}, child: Text("Lupa password ?")),
+            TextFieldMain(
+              placeholder: "example@example.com",
             ),
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: MainButton(
-                  borderRadius: 50.0,
-                  title: "Login",
-                  onpressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MainPage()));
-                  }),
+            Row(
+              children: [Text("Password")],
+            ),
+            SizedBox(
+              height: 7,
+            ),
+            TextFieldMain(
+              placeholder: "example@example.com",
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Forget Password",
+                      style: TextStyle(fontSize: 12),
+                    ))
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                "Log In",
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xff503F76),
+                minimumSize: Size(200, 40),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Belum punya akun?"),
-                TextButton(onPressed: () {}, child: Text("Buat akun")),
+                Text(
+                  "Don't have an account?",
+                  style: TextStyle(fontSize: 13),
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => regist()));
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 13),
+                    ))
               ],
             )
           ],

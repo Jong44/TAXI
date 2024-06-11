@@ -1,4 +1,5 @@
 [
+<<<<<<< HEAD
     {
       "title": "Mental Health di Kalangan Milenial",
       "publisher": "YT : Universitas Gadjah Mada",
@@ -35,3 +36,41 @@
       "path": "audio/podcast5.mp3"
     }
   ]
+=======
+  {
+    "title": "Mental Health di Kalangan Milenial",
+    "publisher": "YT : Universitas Gadjah Mada",
+    "time": "20.07",
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/pQnejArI-oAsd.jpg?alt=media&token=16542acc-1d36-4184-bb56-d7fabfa2cb23",
+    "path": "audio/podcast1.mp3"
+  },
+  {
+    "title": "Mengenal Gejala Dini Gangguan Mental Emosional",
+    "publisher": "YT : Rumah Sakit USU",
+    "time": "26.12",
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/Ahjt6SHO78csd.jpg?alt=media&token=fa59c5f8-f3b9-4b3c-9700-bd98dc11730b",
+    "path": "audio/podcast2.mp3"
+  },
+  {
+    "title": "PHUBBING DAN KESEHATAN MENTAL REMAJA",
+    "publisher": "YT : RSUD Hj. Anna Lasmanah",
+    "time": "58.29",
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/_wEHYfmY9FQsd.jpg?alt=media&token=125b3f33-9a05-4941-9944-098e91c8597c",
+    "path": "audio/podcast3.mp3"
+  },
+  {
+    "title": "115. Kamu Juga Manusia, Sebuah Dokumenter Tentang Kesehatan Mental",
+    "publisher": "YT : Menjadi Manusia",
+    "time": "1.07.06",
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/LeFkkFCFbmEsd.jpg?alt=media&token=6c01d7d9-cdac-48f2-82cf-9daf4d345b30",
+    "path": "audio/podcast4.mp3"
+  },
+  {
+    "title": "APA ITU MENTAL HEALTH ISSUES??? | Josua Iwan Wahyudi | LIFE SERIES",
+    "publisher": "YT : Today's Message",
+    "time": "34.54",
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/taxi-5e40f.appspot.com/o/komKdcXIVDosd.jpg?alt=media&token=d1b7f426-8ecb-40db-82c4-96eb2d88c347",
+    "path": "audio/podcast5.mp3"
+  }
+]
+>>>>>>> albi
