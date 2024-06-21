@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/services/ProfileServices.dart';
 
 class EditProfile extends StatefulWidget {
@@ -43,12 +44,13 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       namaController.text = widget.nama;
       tanggalLahir = widget.tanggalLahir != ""
-          ? widget.tanggalLahir.split(" / ")
+          ? widget.tanggalLahir.split("-")
           : ["", "", ""];
       indexJenisKelamin = widget.jenisKelamin == "Laki-laki" ? 0 : 1;
       nomorTeleponController.text = widget.nomorTelepon;
       alamatEmailController.text = widget.alamatEmail;
     });
+    print(widget.tanggalLahir.split("-"));
   }
 
   @override
@@ -116,6 +118,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 height: 40,
                 child: TextField(
+                  controller: TextEditingController(text: tanggalLahir[2]),
                   onChanged: (value) {
                     setState(() {
                       tanggalLahir[0] = value;
@@ -138,6 +141,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 height: 40,
                 child: TextField(
+                  controller: TextEditingController(text: tanggalLahir[1]),
                   onChanged: (value) {
                     setState(() {
                       tanggalLahir[1] = value;
@@ -160,10 +164,10 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 height: 40,
                 child: TextField(
+                  controller: TextEditingController(text: tanggalLahir[0]),
                   onChanged: (value) {
                     setState(() {
                       tanggalLahir[2] = value;
-                      print(tanggalLahir);
                     });
                   },
                   style: TextStyle(fontSize: 13),
@@ -204,7 +208,7 @@ class _EditProfileState extends State<EditProfile> {
                     color: Colors.grey.withOpacity(0.1),
                     border: Border.all(
                       color: indexJenisKelamin == 0
-                          ? Color(0xff174A41)
+                          ? ColorConfig.primaryColor
                           : Colors.transparent,
                     ),
                   ),
@@ -227,7 +231,7 @@ class _EditProfileState extends State<EditProfile> {
                       color: Colors.grey.withOpacity(0.1),
                       border: Border.all(
                         color: indexJenisKelamin == 1
-                            ? Color(0xff174A41)
+                            ? ColorConfig.primaryColor
                             : Colors.transparent,
                       )),
                   height: 40,
@@ -307,7 +311,6 @@ class _EditProfileState extends State<EditProfile> {
                 data["fotoProfil"] = "";
               });
 
-              ProfileService().saveData(data);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text("Data berhasil disimpan"),

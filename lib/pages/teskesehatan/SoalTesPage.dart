@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/SoalTesModel.dart';
 import 'package:taxi_app/pages/teskesehatan/skor.dart';
 
@@ -129,10 +130,10 @@ class _SoalTesPageState extends State<SoalTesPage> {
                                                   ? Colors.white
                                                   : poinSelected[indexSoal] ==
                                                           poinSoal[indexPoint]
-                                                      ? Color(0xff235347)
+                                                      ? ColorConfig.primaryColor
                                                       : Colors.white,
                                           border: Border.all(
-                                              color: Color(0xff235347),
+                                              color: ColorConfig.primaryColor,
                                               width: 1.5),
                                         ),
                                       ),

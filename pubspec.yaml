@@ -46,6 +46,8 @@ dependencies:
   firebase_database: ^10.4.0
   cloud_firestore: ^4.14.0
   flutter_svg: ^1.1.6
+  firebase_auth: ^4.16.0
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,7 @@ flutter:
     - assets/banks/
     - assets/data/
     - assets/audio/
+    - assets/taca/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -93,10 +96,12 @@ flutter:
     - family: PlusJakartaSans
       fonts:
         - asset: assets/fonts/PlusJakartaSans.ttf
-        - asset: assets/fonts/PlusJakartaSans-italic.ttf
+        - asset: assets/fonts/PlusJakartaSans-Italic.ttf
           style: italic
-        - asset: assets/fonts/PlusJakartaSans-medium.ttf
+        - asset: assets/fonts/PlusJakartaSans-Medium.ttf
           weight: 500
+        - asset: assets/fonts/PlusJakartaSans-SemiBold.ttf
+          weight: 600
   #       - asset: fonts/Schyler-Italic.ttf
   #   - family: Trajan Pro
   #     fonts:

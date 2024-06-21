@@ -60,13 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         podcast = value;
       });
-      print(podcast);
     });
     ArtikelService().getArtikel().then((value) {
       setState(() {
         blog = value;
       });
-      print(blog);
     });
   }
 
@@ -81,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               searchController: searchController,
             ),
             SizedBox(
-              height: 15,
+              height: 10,
             ),
             EmojisCard(
               point: point,

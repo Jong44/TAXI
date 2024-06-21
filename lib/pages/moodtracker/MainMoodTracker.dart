@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:iconify_flutter/icons/gala.dart';
 import 'package:intl/intl.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/pages/moodtracker/ReviewMoodTracker.dart';
 import 'package:taxi_app/services/MoodTrackerService.dart';
 import 'package:taxi_app/utils/formatTanggal.dart';
@@ -168,20 +170,76 @@ class _MainMoodTrackerState extends State<MainMoodTracker> {
         point = 3;
       });
     }
-
-    print("JUmlah Emosi Positif : $jumlahEmosiPositif");
-    print("JUmlah Emosi Negatif : $jumlahEmosiNegatif");
   }
 
   int jumlahEmosiPositif = 0;
   int jumlahEmosiNegatif = 0;
   int jumlahPengaruh = 0;
+  String date = "";
+  TextEditingController noteController = TextEditingController();
+  Map hasil = {};
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    date = formatTanggal(DateTime.now());
+    MoodTrackerService().getMoodTrackerToday().then((value) {
+      setState(() {
+        hasil = value;
+      });
+      if (hasil.isNotEmpty) {
+        listEmosiPositif.forEach((e) {
+          hasil['emosi_positif'].forEach((element) {
+            if (e['name'] == element['name']) {
+              setState(() {
+                e['status'] = true;
+              });
+            }
+          });
+        });
+
+        listEmosiNegatif.forEach((element) {
+          hasil['emosi_negatif'].forEach((element2) {
+            if (element['name'] == element2['name']) {
+              setState(() {
+                element['status'] = true;
+              });
+            }
+          });
+        });
+
+        listPengaruh.forEach((element) {
+          hasil['pengaruh'].forEach((element2) {
+            if (element['name'] == element2['name']) {
+              setState(() {
+                element['status'] = true;
+              });
+            }
+          });
+        });
+
+        setState(() {
+          noteController.text = hasil['note'];
+          point = hasil['point'];
+
+          jumlahEmosiPositif = hasil['emosi_positif'].length;
+          jumlahEmosiNegatif = hasil['emosi_negatif'].length;
+          jumlahPengaruh = hasil['pengaruh'].length;
+        });
+
+        changePoint();
+      }
+    });
+    print(hasil);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Mood Tracker'),
+          title: Text(date,
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -266,7 +324,7 @@ class _MainMoodTrackerState extends State<MainMoodTracker> {
                             horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           color: listEmosiPositif[index]['status']
-                              ? const Color(0xff235347)
+                              ? ColorConfig.primaryColor
                               : const Color(0xffdddddd).withOpacity(0.4),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -313,7 +371,7 @@ class _MainMoodTrackerState extends State<MainMoodTracker> {
                             horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           color: listEmosiNegatif[index]['status']
-                              ? const Color(0xff235347)
+                              ? ColorConfig.primaryColor
                               : const Color(0xffdddddd).withOpacity(0.4),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -361,7 +419,7 @@ class _MainMoodTrackerState extends State<MainMoodTracker> {
                             horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           color: listPengaruh[index]['status']
-                              ? const Color(0xff235347)
+                              ? ColorConfig.primaryColor
                               : const Color(0xffdddddd).withOpacity(0.4),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -381,6 +439,35 @@ class _MainMoodTrackerState extends State<MainMoodTracker> {
                 SizedBox(
                   height: 20,
                 ),
+                Text(
+                  "Ceritakan Perasaanmu Hari Ini",
+                  style: TextStyle(
+                      letterSpacing: 0.5, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border:
+                        Border.all(color: const Color(0xffdddddd), width: 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: noteController,
+                    style: TextStyle(fontSize: 13),
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -390,11 +477,34 @@ class _MainMoodTrackerState extends State<MainMoodTracker> {
           child: MainButton(
             title: "Simpan",
             onpressed: () {
-              MoodTrackerService().tambahRiwayatMoodTracker({
-                "point": point.toString(),
-                "date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
-              });
+              final moodPositif = listEmosiPositif
+                  .where((element) => element['status'] == true)
+                  .toList();
+              final moodNegatif = listEmosiNegatif.where((element) {
+                return element['status'] == true;
+              }).toList();
+              final pengaruh = listPengaruh
+                  .where((element) => element['status'] == true)
+                  .toList();
 
+              if (hasil.isNotEmpty) {
+                MoodTrackerService().updateMoodTracker(
+                  noteController.text,
+                  moodNegatif,
+                  moodPositif,
+                  pengaruh,
+                  point,
+                  hasil['id'],
+                );
+              } else {
+                MoodTrackerService().addMoodTracker(
+                  noteController.text,
+                  moodNegatif,
+                  moodPositif,
+                  pengaruh,
+                  point,
+                );
+              }
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -1,39 +1,39 @@
 class ProfileModel {
-  String nama;
-  String tanggalLahir;
-  String jenisKelamin;
-  String nomorTelepon;
-  String alamatEmail;
-  String fotoProfil;
+  String fullName;
+  String birthday;
+  String gender;
+  String no_hp;
+  String email;
+  String image_url;
 
   ProfileModel({
-    required this.nama,
-    required this.tanggalLahir,
-    required this.jenisKelamin,
-    required this.nomorTelepon,
-    required this.alamatEmail,
-    required this.fotoProfil,
+    required this.fullName,
+    required this.birthday,
+    required this.email,
+    required this.gender,
+    required this.image_url,
+    required this.no_hp,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      nama: json['nama'],
-      tanggalLahir: json['tanggalLahir'],
-      jenisKelamin: json['jenisKelamin'],
-      nomorTelepon: json['nomorTelepon'],
-      alamatEmail: json['alamatEmail'],
-      fotoProfil: json['fotoProfil'],
+      fullName: json['fullName'] ?? '',
+      birthday: json['birthday'] ?? '',
+      gender: json['gender'] ?? '',
+      no_hp: json['no_hp'] ?? '',
+      email: json['email'] ?? '',
+      image_url: json['image_url'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'nama': nama,
-      'tanggalLahir': tanggalLahir,
-      'jenisKelamin': jenisKelamin,
-      'nomorTelepon': nomorTelepon,
-      'alamatEmail': alamatEmail,
-      'fotoProfil': fotoProfil,
+      'fullName': fullName,
+      'birthday': birthday,
+      'gender': gender,
+      'no_hp': no_hp,
+      'email': email,
+      'image_url': image_url,
     };
   }
 }

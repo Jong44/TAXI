@@ -1,8 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:taxi_app/components/pages/profilescreen/CardMenu.dart';
+import 'package:taxi_app/components/pages/profilescreen/CardProfile.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/ProfileModel.dart';
+import 'package:taxi_app/pages/moodtracker/ReviewMoodTracker.dart';
 import 'package:taxi_app/pages/profiles/SettingProfileScreen.dart';
+import 'package:taxi_app/services/AuthService.dart';
 import 'package:taxi_app/services/ProfileServices.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -14,6 +19,14 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   List menuProfile = [
+    {
+      "listMenu": [
+        {
+          "nama": "Mood Tracker",
+          "path": ReviewMoodTracker(),
+        },
+      ],
+    },
     {
       "listMenu": [
         {
@@ -37,26 +50,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
         },
         {
           "nama": "Keluar",
+          "path": "Keluar",
         }
       ]
     }
   ];
 
   ProfileModel profile = ProfileModel(
-      nama: "example",
-      tanggalLahir: "",
-      jenisKelamin: "",
-      nomorTelepon: "1123123213",
-      alamatEmail: "",
-      fotoProfil: "");
+    fullName: "",
+    birthday: "",
+    email: "",
+    no_hp: "",
+    gender: "",
+    image_url: "",
+  );
 
   Future<void> getProfile() async {
     ProfileService profileService = ProfileService();
-    String data = await profileService.getData();
-    Map<String, dynamic> dataProfile = jsonDecode(data);
-    ProfileModel profileModel = ProfileModel.fromJson(dataProfile);
+    ProfileModel dataProfile = await profileService.getProfile();
     setState(() {
-      profile = profileModel;
+      profile = dataProfile;
     });
   }
 
@@ -69,6 +82,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (profile.fullName == "") {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -79,119 +97,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: 50,
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SettingProfileScreen()));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.grey[200],
-                          radius: 30,
-                          backgroundImage: AssetImage('assets/dokter1.png'),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                profile.nama,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                profile.nomorTelepon,
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.grey[500]),
-                              ),
-                            ])
-                      ],
-                    ),
-                  ),
-                ),
+                CardProfile(profile: profile),
                 SizedBox(
                   height: 40,
                 ),
                 Column(
                   children: List.generate(
-                    menuProfile.length,
-                    (indexMenu) => Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List.generate(
-                          menuProfile[indexMenu]['listMenu'].length,
-                          (indexSubMenu) => Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    menuProfile[indexMenu]['listMenu']
-                                        [indexSubMenu]['nama'],
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        height: 2,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 12,
-                                  )
-                                ],
-                              ),
-                              if (indexSubMenu <
-                                  menuProfile[indexMenu]['listMenu'].length - 1)
-                                Divider(
-                                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                      menuProfile.length,
+                      (indexMenu) => CardMenu(
+                          menuProfile: menuProfile, indexMenu: indexMenu)),
                 ),
               ],
             ),

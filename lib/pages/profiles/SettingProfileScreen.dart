@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:iconify_flutter/icons/raphael.dart';
 import 'package:iconify_flutter/icons/ri.dart';
 import 'package:taxi_app/components/pages/profilescreen/EditProfile.dart';
 import 'package:taxi_app/components/pages/profilescreen/ReadProfile.dart';
+import 'package:taxi_app/components/pages/profilescreen/SetMediaProfile.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/ProfileModel.dart';
 import 'package:taxi_app/services/ProfileServices.dart';
 
@@ -22,23 +25,21 @@ class SettingProfileScreen extends StatefulWidget {
 class _SettingProfileScreenState extends State<SettingProfileScreen> {
   bool isEdit = false;
   ProfileModel profile = ProfileModel(
-      nama: "",
-      tanggalLahir: "",
-      jenisKelamin: "",
-      nomorTelepon: "",
-      alamatEmail: "",
-      fotoProfil: "");
+    fullName: "",
+    birthday: "",
+    email: "",
+    no_hp: "=",
+    gender: "",
+    image_url: "",
+  );
+  File image = File("");
 
   Future<void> getProfile() async {
     ProfileService profileService = ProfileService();
-    String data = await profileService.getData();
-    if (data != '') {
-      Map<String, dynamic> dataProfile = jsonDecode(data);
-      ProfileModel profileModel = ProfileModel.fromJson(dataProfile);
-      setState(() {
-        profile = profileModel;
-      });
-    }
+    final data = await profileService.getProfile();
+    setState(() {
+      profile = data;
+    });
   }
 
   @override
@@ -50,6 +51,11 @@ class _SettingProfileScreenState extends State<SettingProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (profile.fullName == "") {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -73,17 +79,32 @@ class _SettingProfileScreenState extends State<SettingProfileScreen> {
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
-                            color: Colors.grey,
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage("assets/dokter1.png"),
-                                fit: BoxFit.cover)),
+                          color: Colors.grey,
+                          shape: BoxShape.circle,
+                          image: image.path != ""
+                              ? DecorationImage(
+                                  image: FileImage(image), fit: BoxFit.cover)
+                              : DecorationImage(
+                                  image: NetworkImage(profile.image_url),
+                                  fit: BoxFit.cover),
+                        ),
                       ),
                       Positioned(
                           bottom: 5,
                           right: 10,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return setMediaProfile()
+                                        .build(context, image, (File image) {
+                                      setState(() {
+                                        this.image = image;
+                                      });
+                                    });
+                                  });
+                            },
                             child: Container(
                               alignment: Alignment.center,
                               padding: EdgeInsets.all(5),
@@ -91,7 +112,7 @@ class _SettingProfileScreenState extends State<SettingProfileScreen> {
                               width: 30,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Color(0xff174A41),
+                                color: ColorConfig.primaryColor,
                               ),
                               child: Iconify(
                                 Mdi.camera_plus_outline,
@@ -111,7 +132,7 @@ class _SettingProfileScreenState extends State<SettingProfileScreen> {
                   child: IconButton(
                     icon: Iconify(
                       Raphael.edit,
-                      color: Color(0xff174A41),
+                      color: ColorConfig.primaryColor,
                       size: 20,
                     ),
                     onPressed: () {
@@ -127,18 +148,18 @@ class _SettingProfileScreenState extends State<SettingProfileScreen> {
                 ),
                 isEdit
                     ? EditProfile(
-                        nama: profile.nama,
-                        tanggalLahir: profile.tanggalLahir,
-                        jenisKelamin: profile.jenisKelamin,
-                        nomorTelepon: profile.nomorTelepon,
-                        alamatEmail: profile.alamatEmail,
+                        nama: profile.fullName,
+                        tanggalLahir: profile.birthday,
+                        jenisKelamin: profile.gender,
+                        nomorTelepon: profile.no_hp,
+                        alamatEmail: profile.email,
                       )
                     : ReadProfile(
-                        nama: profile.nama,
-                        tanggalLahir: profile.tanggalLahir,
-                        jenisKelamin: profile.jenisKelamin,
-                        nomorTelepon: profile.nomorTelepon,
-                        alamatEmail: profile.alamatEmail,
+                        nama: profile.fullName,
+                        tanggalLahir: profile.birthday,
+                        jenisKelamin: profile.gender,
+                        nomorTelepon: profile.no_hp,
+                        alamatEmail: profile.email,
                       ),
                 SizedBox(
                   height: 20,

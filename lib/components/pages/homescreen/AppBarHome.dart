@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bx.dart';
+import 'package:iconify_flutter/icons/ci.dart';
 import 'package:taxi_app/components/global/MainInputText.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/pages/notifikasi/notif.dart';
 
 class AppBarHome extends StatelessWidget {
@@ -9,22 +13,22 @@ class AppBarHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset(
-            "assets/logo_lanscape.png",
-            width: 160,
+            "assets/taca/logo_lanscape.png",
+            width: 130,
           ),
           IconButton(
               onPressed: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => notif()));
               },
-              icon: Icon(
-                Icons.notifications,
-                color: Color(0xff235347),
+              icon: Iconify(
+                Ci.notification,
+                color: ColorConfig.primaryColor,
               )),
         ],
       ),

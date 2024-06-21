@@ -1,69 +1,96 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taxi_app/utils/formatTanggal.dart';
 
 class MoodTrackerService {
-  late SharedPreferences _prefs;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+  Future<void> addMoodTracker(String note, List emosiNegatif, List emosiPositif,
+      List pengaruh, int point) async {
+    await _firestore
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .collection('mood_tracker')
+        .add({
+      'point': point,
+      'note': note,
+      'emosi_negatif': emosiNegatif,
+      'emosi_positif': emosiPositif,
+      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      'pengaruh': pengaruh,
+    });
   }
 
-  Future<void> tambahRiwayatMoodTracker(Map<String, dynamic> track) async {
-    bool isExist = false;
-    await init();
-    Map<String, dynamic> moodTracker = {
-      "point": track['point'].toString(),
-      "date": track['date'].toString(),
-    };
-
-    List<String> listMoodTracker = _prefs.getStringList('moodTracker') ?? [];
-
-    listMoodTracker.forEach((element) {
-      if (element.substring(17, element.length - 1) ==
-          DateFormat("yyyy-MM-dd").format(DateTime.now())) {
-        isExist = true;
-      }
+  Future<List> getMoodTracker() async {
+    List moodTracker = [];
+    await _firestore
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .collection('mood_tracker')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        moodTracker.add(doc.data());
+      });
     });
-
-    if (!isExist) {
-      listMoodTracker.add(moodTracker.toString());
-    } else {
-      listMoodTracker.removeWhere((element) =>
-          element.substring(17, element.length - 1) ==
-          DateFormat("yyyy-MM-dd").format(DateTime.now()));
-      listMoodTracker.add(moodTracker.toString());
-    }
-
-    await _prefs.setStringList('moodTracker', listMoodTracker);
-  }
-
-  Future<List<Map<String, dynamic>>> getRiwayatMoodTracker() async {
-    await init();
-    List<String> listMoodTracker = _prefs.getStringList('moodTracker') ?? [];
-    List<Map<String, dynamic>> result = [];
-    listMoodTracker.forEach((element) {
-      Map<String, dynamic> moodTracker = {
-        "point": element.substring(8, 9),
-        "date": element.substring(17, element.length - 1),
-      };
-      result.add(moodTracker);
-    });
-    return result;
+    return moodTracker;
   }
 
   Future<int> getPointMoodTrackerToday() async {
-    await init();
-    List<String> listMoodTracker = _prefs.getStringList('moodTracker') ?? [];
     int point = 0;
-    listMoodTracker.forEach((element) {
-      if (element.substring(17, element.length - 1) ==
-          DateFormat("yyyy-MM-dd").format(DateTime.now())) {
-        point = int.parse(element.substring(8, 9));
-      }
+    await _firestore
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .collection('mood_tracker')
+        .where('date',
+            isEqualTo: DateFormat('yyyy-MM-dd').format(DateTime.now()))
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        final data = doc.data() as Map;
+        point = data['point'];
+      });
     });
     return point;
+  }
+
+  Future getMoodTrackerToday() async {
+    Map moodTracker = {};
+    await _firestore
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .collection('mood_tracker')
+        .where('date',
+            isEqualTo: DateFormat('yyyy-MM-dd').format(DateTime.now()))
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        moodTracker = doc.data() as Map;
+        moodTracker['id'] = doc.id;
+      });
+    });
+    return moodTracker;
+  }
+
+  Future updateMoodTracker(String note, List emosiNegatif, List emosiPositif,
+      List pengaruh, int point, String id) async {
+    await _firestore
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .collection('mood_tracker')
+        .doc(id)
+        .update({
+      'note': note,
+      'emosi_negatif': emosiNegatif,
+      'emosi_positif': emosiPositif,
+      'pengaruh': pengaruh,
+      'point': point,
+    });
   }
 }

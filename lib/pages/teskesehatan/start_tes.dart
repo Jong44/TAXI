@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/pages/teskesehatan/SoalTesPage.dart';
 import 'package:taxi_app/pages/teskesehatan/skor.dart';
 
@@ -65,7 +66,7 @@ class StartTestKesehatan extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff173b34),
+                  backgroundColor: ColorConfig.primaryColor,
                   minimumSize: Size(double.infinity, 50)),
             ),
           ],

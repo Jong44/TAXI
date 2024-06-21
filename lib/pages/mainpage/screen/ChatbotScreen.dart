@@ -6,6 +6,7 @@ import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
 import 'package:taxi_app/components/global/OnlineStatus.dart';
 import 'package:taxi_app/components/pages/chatbotscreen/WelcomeChat.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/services/ChatbotService.dart';
 
 class ChatbotScreen extends StatefulWidget {
@@ -125,7 +126,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Image.asset(
-              'assets/logo_appbar.png',
+              'assets/taca/logo_notext.png',
               width: 30,
             ),
           )
@@ -183,7 +184,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                                 child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: Color(0xff235347),
+                                      color: ColorConfig.primaryColor,
                                     ),
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 12, vertical: 12),
@@ -243,7 +244,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: isLoading == true
                                     ? Color.fromRGBO(0, 0, 0, 0.2)
-                                    : Color(0xff235347)),
+                                    : ColorConfig.primaryColor),
                             child: Icon(
                               Icons.send,
                               color: Colors.white,

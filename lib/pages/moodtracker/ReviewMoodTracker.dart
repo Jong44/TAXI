@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
+import 'package:taxi_app/pages/mainpage/MainPage.dart';
 import 'package:taxi_app/services/MoodTrackerService.dart';
 import 'package:taxi_app/utils/formatTanggal.dart';
 
@@ -52,11 +54,10 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    MoodTrackerService().getRiwayatMoodTracker().then((value) {
+    MoodTrackerService().getMoodTracker().then((value) {
       setState(() {
         listMood = value;
       });
-      print(listMood);
     });
   }
 
@@ -64,7 +65,16 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Review Mood Tracker"),
+        title: Text("Mood Tracker",
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => MainPage()));
+              },
+              icon: Icon(Icons.home))
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -86,8 +96,15 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                               height: 50,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: point == listEmojis[i]['point']
-                                    ? listEmojis[i]['color']
+                                color: listMood.length != 0
+                                    ? listMood
+                                                .where((element) =>
+                                                    element['point'] == i + 1)
+                                                .toList()
+                                                .length >
+                                            0
+                                        ? listEmojis[i]['color']
+                                        : Colors.white
                                     : Colors.white,
                                 boxShadow: [
                                   BoxShadow(
@@ -171,9 +188,8 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                                     decoration: BoxDecoration(
                                       color: listMood.length != 0
                                           ? index < listMood.length
-                                              ? listEmojis[int.parse(
-                                                      listMood[index]
-                                                          ['point']) -
+                                              ? listEmojis[listMood[index]
+                                                      ['point'] -
                                                   1]['color']
                                               : Colors.grey.shade300
                                           : Colors.grey.shade300,
@@ -182,9 +198,8 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                                     child: listMood.length != 0
                                         ? index < listMood.length
                                             ? Image.asset(
-                                                listEmojis[int.parse(
-                                                        listMood[index]
-                                                            ['point']) -
+                                                listEmojis[listMood[index]
+                                                        ['point'] -
                                                     1]['emoji'],
                                                 width: 20,
                                                 height: 20,
@@ -217,17 +232,15 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     color: listMood.length != 0
-                                        ? listEmojis[int.parse(
-                                                listMood[indexActive]
-                                                    ['point']) -
+                                        ? listEmojis[listMood[indexActive]
+                                                ['point'] -
                                             1]['color']
                                         : Colors.grey.shade300,
                                   ),
                                   child: listMood.length != 0
                                       ? Image.asset(
-                                          listEmojis[int.parse(
-                                                  listMood[indexActive]
-                                                      ['point']) -
+                                          listEmojis[listMood[indexActive]
+                                                  ['point'] -
                                               1]['emoji'],
                                           width: 30,
                                           height: 30,
@@ -254,9 +267,8 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                                                 fontWeight: FontWeight.w500)),
                                     Text(
                                         listMood.length != 0
-                                            ? listEmojis[int.parse(
-                                                    listMood[indexActive]
-                                                        ['point']) -
+                                            ? listEmojis[listMood[indexActive]
+                                                    ['point'] -
                                                 1]['description']
                                             : "",
                                         style: TextStyle(
@@ -264,6 +276,132 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                                             fontWeight: FontWeight.bold)),
                                   ],
                                 )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Emosi Positif :",
+                                  style: TextStyle(
+                                      letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                    child: Wrap(
+                                  runSpacing: 5,
+                                  children: List.generate(
+                                    listMood.isNotEmpty
+                                        ? listMood[indexActive]['emosi_positif']
+                                            .length
+                                        : 0,
+                                    (index) => Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 6, vertical: 3),
+                                      margin: EdgeInsets.only(right: 5),
+                                      decoration: BoxDecoration(
+                                        color: ColorConfig.primaryColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Text(
+                                        listMood[indexActive]['emosi_positif']
+                                            [index]['name'],
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Emosi Negatif :",
+                                  style: TextStyle(
+                                      letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                    child: Wrap(
+                                  runSpacing: 5,
+                                  children: List.generate(
+                                    listMood.isNotEmpty
+                                        ? listMood[indexActive]['emosi_negatif']
+                                            .length
+                                        : 0,
+                                    (index) => Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 6, vertical: 3),
+                                      margin: EdgeInsets.only(right: 5),
+                                      decoration: BoxDecoration(
+                                        color: ColorConfig.primaryColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Text(
+                                        listMood[indexActive]['emosi_negatif']
+                                            ?[index]['name'],
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Pengaruh :",
+                                  style: TextStyle(
+                                      letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                    child: Wrap(
+                                  runSpacing: 5,
+                                  children: List.generate(
+                                    listMood.isNotEmpty
+                                        ? listMood[indexActive]['pengaruh']
+                                            .length
+                                        : 0,
+                                    (index) => Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 6, vertical: 3),
+                                      margin: EdgeInsets.only(right: 5),
+                                      decoration: BoxDecoration(
+                                        color: ColorConfig.primaryColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Text(
+                                        listMood[indexActive]['pengaruh']
+                                            ?[index]['name'],
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ))
                               ],
                             ),
                             SizedBox(
@@ -278,6 +416,39 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                 SizedBox(
                   height: 20,
                 ),
+                Text(
+                  "Catatan Moodmu",
+                  style: TextStyle(
+                      letterSpacing: 0.5, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border:
+                        Border.all(color: const Color(0xffdddddd), width: 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: TextEditingController(
+                        text: listMood.length != 0
+                            ? listMood[indexActive]['note']
+                            : ""),
+                    readOnly: true,
+                    style: TextStyle(fontSize: 13),
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

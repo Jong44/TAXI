@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:taxi_app/components/global/MainButton.dart';
 import 'package:taxi_app/components/global/Segitiga.dart';
 import 'package:taxi_app/models/HasilTesModel.dart';
 import 'package:taxi_app/pages/search_dokter/search_page.dart';
@@ -220,21 +221,10 @@ class _skorState extends State<skor> {
                       SizedBox(
                         height: 50,
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => search_page()));
-                        },
-                        child: Text(
-                          "Carikan Ahli",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff173b34),
-                            minimumSize: Size(double.infinity, 50)),
-                      ),
+                      MainButton(
+                          title: "Carikan Ahli",
+                          onpressed: () {},
+                          borderRadius: 50.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

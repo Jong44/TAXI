@@ -25,12 +25,12 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   int indexTab = 0;
   Map<String, dynamic> dataBook = {};
   ProfileModel profile = ProfileModel(
-    nama: "",
-    tanggalLahir: "",
-    jenisKelamin: "",
-    nomorTelepon: "",
-    alamatEmail: "",
-    fotoProfil: "",
+    fullName: "Muhammad Fikri",
+    birthday: "2000-01-01",
+    email: "fikri@gmail.com",
+    no_hp: "08123456789",
+    gender: "Laki-laki",
+    image_url: "",
   );
 
   Future<void> tambahRiwayatTransaksi(BookingModel book) async {
@@ -38,19 +38,10 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
     await bookingService.tambahRiwayatTransaksi(book);
   }
 
-  Future<void> getProfiel() async {
-    ProfileService profileService = ProfileService();
-    String dataProfile = await profileService.getData();
-    setState(() {
-      profile = ProfileModel.fromJson(jsonDecode(dataProfile));
-    });
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getProfiel();
   }
 
   @override
