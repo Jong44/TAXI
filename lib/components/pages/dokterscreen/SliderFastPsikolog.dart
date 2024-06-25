@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/RatingStar.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/DokterModel.dart';
-import 'package:taxi_app/pages/detailscreen/DokterDetailScreen.dart';
+import 'package:taxi_app/pages/detaildokter/DokterDetailScreen.dart';
 
 class SliderFastPsikolog extends StatelessWidget {
   final List<DokterModel> dokterList;
@@ -62,7 +63,7 @@ class SliderFastPsikolog extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                              dokterList[index].fotoProfil),
+                                              dokterList[index].image_url),
                                           fit: BoxFit.cover),
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.grey.shade200),
@@ -71,7 +72,7 @@ class SliderFastPsikolog extends StatelessWidget {
                                   height: 7,
                                 ),
                                 Text(
-                                  dokterList[index].nama,
+                                  dokterList[index].fullname,
                                   maxLines: 1,
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
@@ -82,7 +83,7 @@ class SliderFastPsikolog extends StatelessWidget {
                                   height: 2,
                                 ),
                                 Text(
-                                  dokterList[index].ahli,
+                                  dokterList[index].spesialis,
                                   style: TextStyle(fontSize: 9),
                                 ),
                                 SizedBox(
@@ -97,10 +98,10 @@ class SliderFastPsikolog extends StatelessWidget {
                                     spacing: 5,
                                     runSpacing: 5,
                                     children: List.generate(
-                                      dokterList[index].kategori.length,
+                                      dokterList[index].category.length,
                                       (index) {
                                         final text =
-                                            dokterList[index].kategori[index];
+                                            dokterList[index].category[index];
 
                                         return Container(
                                           decoration: BoxDecoration(
@@ -108,8 +109,10 @@ class SliderFastPsikolog extends StatelessWidget {
                                                 BorderRadius.circular(10),
                                             border: Border.all(
                                                 width: 1,
-                                                color: Color(0xff235347)),
-                                            color: Color(0xffF0F4FF),
+                                                color:
+                                                    ColorConfig.primaryColor),
+                                            color: ColorConfig.primaryColor
+                                                .withOpacity(0.1),
                                           ),
                                           constraints: BoxConstraints(
                                             minWidth: 55,
@@ -122,7 +125,8 @@ class SliderFastPsikolog extends StatelessWidget {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 8,
-                                                  color: Color(0xff235347)),
+                                                  color:
+                                                      ColorConfig.primaryColor),
                                             ),
                                           ),
                                         );

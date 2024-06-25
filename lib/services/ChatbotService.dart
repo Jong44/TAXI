@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:taxi_app/repository/C/ChatbotRepository.dart';
+import 'package:taxi_app/repository/Chatbot/ChatbotRepository.dart';
 
 class ChatbotService {
   final ChatbotRepository _chatbotRepository = ChatbotRepository();

@@ -1,13 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/bi.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/raphael.dart';
-import 'package:iconify_flutter/icons/ri.dart';
 import 'package:taxi_app/components/pages/profilescreen/EditProfile.dart';
 import 'package:taxi_app/components/pages/profilescreen/ReadProfile.dart';
 import 'package:taxi_app/components/pages/profilescreen/SetMediaProfile.dart';
@@ -89,38 +86,40 @@ class _SettingProfileScreenState extends State<SettingProfileScreen> {
                                   fit: BoxFit.cover),
                         ),
                       ),
-                      Positioned(
-                          bottom: 5,
-                          right: 10,
-                          child: InkWell(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return setMediaProfile()
-                                        .build(context, image, (File image) {
-                                      setState(() {
-                                        this.image = image;
+                      isEdit
+                          ? Positioned(
+                              bottom: 5,
+                              right: 10,
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return setMediaProfile().build(
+                                            context, image, (File image) {
+                                          setState(() {
+                                            this.image = image;
+                                          });
+                                        });
                                       });
-                                    });
-                                  });
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.all(5),
-                              height: 30,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorConfig.primaryColor,
-                              ),
-                              child: Iconify(
-                                Mdi.camera_plus_outline,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            ),
-                          ))
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.all(5),
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ColorConfig.primaryColor,
+                                  ),
+                                  child: Iconify(
+                                    Mdi.camera_plus_outline,
+                                    color: Colors.white,
+                                    size: 15,
+                                  ),
+                                ),
+                              ))
+                          : SizedBox()
                     ],
                   ),
                 ),
@@ -153,6 +152,7 @@ class _SettingProfileScreenState extends State<SettingProfileScreen> {
                         jenisKelamin: profile.gender,
                         nomorTelepon: profile.no_hp,
                         alamatEmail: profile.email,
+                        image: image,
                       )
                     : ReadProfile(
                         nama: profile.fullName,

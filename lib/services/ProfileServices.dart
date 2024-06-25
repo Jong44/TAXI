@@ -22,35 +22,38 @@ class ProfileService {
     return ProfileModel.fromJson(data);
   }
 
-  Future<void> updateProfile(ProfileModel profile, File image) async {
-    final url = await addImage(image);
-    profile.image_url = url;
+  Future<String> updateProfile(ProfileModel profile, File image) async {
+    if (image.path != '') {
+      final ref = FirebaseStorage.instance.ref().child('profile/$uid.jpg');
+      final uploadTask = ref.putFile(image);
+      uploadTask.whenComplete(() async {
+        profile.image_url = await ref.getDownloadURL();
 
-    final doc = await _firestore
-        .collection('users')
-        .doc(uid)
-        .collection('profile')
-        .get();
-    final data = doc.docs.first.data();
-    final newData = {
-      ...data,
-      ...profile.toJson(),
-    };
-    await _firestore
-        .collection('users')
-        .doc(uid)
-        .collection('profile')
-        .doc(doc.docs.first.id)
-        .update(newData);
+        final doc = await _firestore
+            .collection('users')
+            .doc(uid)
+            .collection('profile')
+            .get();
+
+        final data = doc.docs.first.data();
+        final newData = {
+          ...data,
+          ...profile.toJson(),
+        };
+        await _firestore
+            .collection('users')
+            .doc(uid)
+            .collection('profile')
+            .doc(doc.docs.first.id)
+            .update(newData);
+      });
+    } else {
+      return 'Image is required';
+    }
+    return 'Success';
   }
 
-  Future<String> addImage(File image) async {
-    String url = '';
-    final ref = FirebaseStorage.instance.ref().child('profile/$uid');
-    final uploadTask = ref.putFile(image);
-    uploadTask.whenComplete(() async {
-      url = await ref.getDownloadURL();
-    });
-    return url;
+  Future<String> getUid() async {
+    return uid;
   }
 }

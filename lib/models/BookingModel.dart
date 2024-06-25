@@ -5,8 +5,8 @@ class BookingModel {
   final String date;
   final String waktu;
   final String layanan;
-  final DokterModel dokter;
-  final ProfileModel user;
+  final String dokterUid;
+  final String userUid;
   final String durasi;
   final String mediaKonseling;
   final String metodePembayaran;
@@ -15,23 +15,23 @@ class BookingModel {
     required this.date,
     required this.waktu,
     required this.layanan,
-    required this.dokter,
-    required this.user,
+    required this.dokterUid,
+    required this.userUid,
     required this.durasi,
     required this.mediaKonseling,
     required this.metodePembayaran,
   });
 
-  factory BookingModel.fromJson(Map<String, dynamic> json) {
+  factory BookingModel.fromJson(Map<String, dynamic> data) {
     return BookingModel(
-      date: json['date'],
-      waktu: json['waktu'],
-      layanan: json['layanan'],
-      dokter: DokterModel.fromJson(json['dokter']),
-      user: ProfileModel.fromJson(json['user']),
-      durasi: json['durasi'],
-      mediaKonseling: json['mediaKonseling'],
-      metodePembayaran: json['metodePembayaran'],
+      date: data['date'],
+      waktu: data['waktu'],
+      layanan: data['layanan'],
+      dokterUid: data['dokterUid'],
+      userUid: data['userUid'],
+      durasi: data['durasi'],
+      mediaKonseling: data['mediaKonseling'],
+      metodePembayaran: data['metodePembayaran'],
     );
   }
 
@@ -40,8 +40,8 @@ class BookingModel {
       'date': date,
       'waktu': waktu,
       'layanan': layanan,
-      'dokter': dokter.toJson(),
-      'user': user.toJson(),
+      'dokterUid': dokterUid,
+      'userUid': userUid,
       'durasi': durasi,
       'mediaKonseling': mediaKonseling,
       'metodePembayaran': metodePembayaran,

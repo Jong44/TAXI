@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:taxi_app/components/pages/pembayaranscreen/Pembayaran.dart';
 import 'package:taxi_app/components/pages/pembayaranscreen/RangkumanSesi.dart';
 import 'package:taxi_app/components/pages/pembayaranscreen/SelesaiPembayaran.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/BookingModel.dart';
 import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/models/ProfileModel.dart';
@@ -24,14 +25,8 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   List<String> tabList = ["Rangkuman Sesimu", "Pembayaran", "Selesai"];
   int indexTab = 0;
   Map<String, dynamic> dataBook = {};
-  ProfileModel profile = ProfileModel(
-    fullName: "Muhammad Fikri",
-    birthday: "2000-01-01",
-    email: "fikri@gmail.com",
-    no_hp: "08123456789",
-    gender: "Laki-laki",
-    image_url: "",
-  );
+  String userUid = "";
+  ProfileService profileService = ProfileService();
 
   Future<void> tambahRiwayatTransaksi(BookingModel book) async {
     BookingService bookingService = BookingService();
@@ -42,6 +37,11 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    profileService.getUid().then((value) {
+      setState(() {
+        userUid = value;
+      });
+    });
   }
 
   @override
@@ -86,8 +86,8 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                             height: 30,
                             decoration: BoxDecoration(
                                 color: indexTab == index
-                                    ? Color(0xff235347)
-                                    : Color(0xff235347).withOpacity(0.5),
+                                    ? ColorConfig.primaryColor
+                                    : ColorConfig.primaryColor.withOpacity(0.4),
                                 shape: BoxShape.circle),
                             child: Text(
                               (index + 1).toString(),
@@ -118,10 +118,10 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               ),
               indexTab == 0
                   ? RangkumanSesi(
-                      nama: widget.dokter.nama,
-                      fotoProfil: widget.dokter.fotoProfil,
-                      kategori: widget.dokter.kategori,
-                      harga: widget.dokter.harga,
+                      nama: widget.dokter.fullname,
+                      fotoProfil: widget.dokter.image_url,
+                      kategori: widget.dokter.category,
+                      harga: widget.dokter.price,
                       dataPesanan: widget.dataPesanan,
                       onPilih: (Map<String, dynamic> data) {
                         setState(() {
@@ -132,7 +132,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                     )
                   : indexTab == 1
                       ? Pembayaran(
-                          harga: widget.dokter.harga,
+                          harga: widget.dokter.price,
                           dataPesanan: widget.dataPesanan,
                           onpress: (String metodePembayaran) {
                             setState(() {
@@ -140,14 +140,13 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                                   date: widget.dataPesanan['date'],
                                   waktu: widget.dataPesanan['waktu'],
                                   layanan: widget.dataPesanan['layanan'],
-                                  dokter: widget.dokter,
-                                  user: profile,
+                                  dokterUid: widget.dokter.uid,
+                                  userUid: userUid,
                                   durasi: widget.dataPesanan['durasi'] ?? 0,
                                   mediaKonseling:
                                       widget.dataPesanan['mediaKonseling'] ??
                                           "",
                                   metodePembayaran: metodePembayaran ?? "");
-
                               tambahRiwayatTransaksi(book);
                               indexTab += 1;
                             });

@@ -12,6 +12,7 @@ import 'package:taxi_app/components/pages/homescreen/HomeSlideDokter.dart';
 import 'package:taxi_app/components/pages/homescreen/SlidePromo.dart';
 import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/services/ArtikelService.dart';
+import 'package:taxi_app/services/DokterService.dart';
 import 'package:taxi_app/services/MoodTrackerService.dart';
 import 'package:taxi_app/services/PodcastService.dart';
 
@@ -24,11 +25,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
+  DokterService dokterService = DokterService();
 
-  Future<List<DokterModel>> loadJsonData() async {
-    String jsonString = await rootBundle.loadString('assets/data/dokter.json');
-    List<dynamic> jsonData = jsonDecode(jsonString);
-    return jsonData.map((data) => DokterModel.fromJson(data)).toList();
+  Future<List<DokterModel>> getDokter() async {
+    return dokterService.getDokter();
   }
 
   List<DokterModel> dokter = [];
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     loadPointToday();
-    loadJsonData().then((value) {
+    getDokter().then((value) {
       setState(() {
         dokter = value.sublist(0, 4);
       });

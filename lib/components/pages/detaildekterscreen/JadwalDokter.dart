@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 
 class JadwalDokter extends StatefulWidget {
   final tanggalList;
@@ -8,11 +9,13 @@ class JadwalDokter extends StatefulWidget {
   final layananList;
   final dateList;
   final Function onpressed;
+  final String name;
   final Function(Map<String, dynamic>) onSelectedtanggal;
   final Function(Map<String, dynamic>) onSelectedwaktu;
   final Function(Map<String, dynamic>) onSelectedlayanan;
   const JadwalDokter(
       {super.key,
+      required this.name,
       required this.dateList,
       required this.onpressed,
       required this.layananList,
@@ -47,7 +50,7 @@ class _JadwalDokterState extends State<JadwalDokter> {
             ),
             Icon(
               Icons.calendar_month,
-              color: Color(0xff235347),
+              color: ColorConfig.primaryColor,
             )
           ],
         ),
@@ -84,11 +87,11 @@ class _JadwalDokterState extends State<JadwalDokter> {
                         border: Border.all(
                           width: 1,
                           color: indexTanggal == index
-                              ? Color(0xff235347)
+                              ? ColorConfig.primaryColor
                               : Color(0xffdddddd),
                         ),
                         color: indexTanggal == index
-                            ? Color(0xffF0F4FF)
+                            ? ColorConfig.primaryColor.withOpacity(0.1)
                             : Color(0xfff8f8f8),
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -101,7 +104,7 @@ class _JadwalDokterState extends State<JadwalDokter> {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                                 color: indexTanggal == index
-                                    ? Color(0xff235347)
+                                    ? ColorConfig.primaryColor
                                     : Color(0xffdddddd),
                               ),
                             ),
@@ -112,7 +115,7 @@ class _JadwalDokterState extends State<JadwalDokter> {
                               height: 2,
                               width: 20,
                               color: indexTanggal == index
-                                  ? Color(0xff235347)
+                                  ? ColorConfig.primaryColor
                                   : Color(0xffdddddd),
                             ),
                             SizedBox(
@@ -124,7 +127,7 @@ class _JadwalDokterState extends State<JadwalDokter> {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 24,
                                 color: indexTanggal == index
-                                    ? Color(0xff235347)
+                                    ? ColorConfig.primaryColor
                                     : Color(0xffdddddd),
                               ),
                             ),
@@ -176,20 +179,20 @@ class _JadwalDokterState extends State<JadwalDokter> {
                     margin: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: indexWaktu == index
-                          ? Color(0xffF0F4FF)
+                          ? ColorConfig.primaryColor.withOpacity(0.1)
                           : Color(0xfff8f8f8),
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
                           width: 1,
                           color: indexWaktu == index
-                              ? Color(0xff235347)
+                              ? ColorConfig.primaryColor
                               : Color(0xffdddddd)),
                     ),
                     child: Text(
                       widget.waktuList[index],
                       style: TextStyle(
                           color: indexWaktu == index
-                              ? Color(0xff235347)
+                              ? ColorConfig.primaryColor
                               : Color(0xffdddddd),
                           fontSize: 13,
                           fontWeight: FontWeight.w500),
@@ -227,20 +230,20 @@ class _JadwalDokterState extends State<JadwalDokter> {
                 margin: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   color: indexLayanan == index
-                      ? Color(0xffF0F4FF)
+                      ? ColorConfig.primaryColor.withOpacity(0.1)
                       : Color(0xfff8f8f8),
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(
                       width: 1,
                       color: indexLayanan == index
-                          ? Color(0xff235347)
+                          ? ColorConfig.primaryColor
                           : Color(0xffdddddd)),
                 ),
                 child: Text(
                   widget.layananList[index],
                   style: TextStyle(
                       color: indexLayanan == index
-                          ? Color(0xff235347)
+                          ? ColorConfig.primaryColor
                           : Color(0xffdddddd),
                       fontSize: 12,
                       fontWeight: FontWeight.w500),
@@ -254,7 +257,7 @@ class _JadwalDokterState extends State<JadwalDokter> {
         ),
         MainButton(
           borderRadius: 10.0,
-          title: "Konsultasi dengan Marisca",
+          title: "Konsultasi dengan ${widget.name}",
           onpressed: widget.onpressed,
         ),
       ],

@@ -1,47 +1,51 @@
 class DokterModel {
-  final String nama;
-  final String ahli;
-  final List<String> kategori;
-  final List<String> pendidikan;
+  final String uid;
+  final String fullname;
+  final String spesialis;
+  final List<String> category;
+  final List<String> education;
   final int sipp;
-  final String fotoProfil;
-  final int harga;
-  final int pengalaman;
+  final String image_url;
+  final int price;
+  final int experience;
 
   DokterModel({
-    required this.nama,
-    required this.ahli,
-    required this.kategori,
-    required this.pendidikan,
+    required this.uid,
+    required this.fullname,
+    required this.spesialis,
+    required this.category,
+    required this.education,
     required this.sipp,
-    required this.fotoProfil,
-    required this.harga,
-    required this.pengalaman,
+    required this.image_url,
+    required this.price,
+    required this.experience,
   });
 
   factory DokterModel.fromJson(Map<String, dynamic> json) {
     return DokterModel(
-      nama: json['nama'],
-      ahli: json['ahli'],
-      kategori: List<String>.from(json['kategori']),
-      pendidikan: List<String>.from(json['pendidikan']),
+      uid: json['uid'],
+      fullname: json['fullname'],
+      spesialis: json['spesialis'],
+      category: json['category'].cast<String>(),
+      education: json['education'].cast<String>(),
       sipp: json['sipp'],
-      fotoProfil: json['fotoProfil'],
-      harga: json['harga'] as int,
-      pengalaman: json['pengalaman'] as int,
+      image_url: json['image_url'],
+      price: json['price'] as int,
+      experience: json['experience'] as int,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'nama': nama,
-      'ahli': ahli,
-      'kategori': kategori,
-      'pendidikan': pendidikan,
+      'uid': uid,
+      'fullname': fullname,
+      'spesialis': spesialis,
+      'category': category,
+      'education': education,
       'sipp': sipp,
-      'fotoProfil': fotoProfil,
-      'harga': harga,
-      'pengalaman': pengalaman,
+      'image_url': image_url,
+      'price': price,
+      'experience': experience,
     };
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 
 class RiwayatDokter extends StatelessWidget {
   final String nama;
@@ -66,7 +67,7 @@ class RiwayatDokter extends StatelessWidget {
           children: [
             Iconify(
               Mdi.graduation_cap,
-              color: Color(0xff235347),
+              color: ColorConfig.primaryColor,
               size: 40,
             ),
             SizedBox(
@@ -105,7 +106,7 @@ class RiwayatDokter extends StatelessWidget {
           children: [
             Iconify(
               Mdi.shield_check,
-              color: Color(0xff235347),
+              color: ColorConfig.primaryColor,
               size: 40,
             ),
             SizedBox(

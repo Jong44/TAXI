@@ -15,15 +15,16 @@ class TransaksiScreen extends StatefulWidget {
 }
 
 class _TransaksiScreenState extends State<TransaksiScreen> {
-  List<BookingModel> listTransaksi = [];
+  List<Map<String, dynamic>> listTransaksi = [];
 
   Future<void> getTransaksi() async {
     BookingService bookingService = BookingService();
-    List<BookingModel> data = await bookingService.getRiwayatTransaksi();
+    List<Map<String, dynamic>> list =
+        await bookingService.getRiwayatTransaksi();
     setState(() {
-      listTransaksi = data;
+      listTransaksi = list;
     });
-    print(listTransaksi.length);
+    print(listTransaksi);
   }
 
   int indexMenu = 0;

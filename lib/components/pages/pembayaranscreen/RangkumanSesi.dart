@@ -5,6 +5,7 @@ import 'package:iconify_flutter/icons/fluent_emoji_high_contrast.dart';
 import 'package:iconify_flutter/icons/fluent_mdl2.dart';
 import 'package:iconify_flutter/icons/tabler.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/utils/formatRupiah.dart';
 
 class RangkumanSesi extends StatefulWidget {
@@ -91,10 +92,10 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
                           padding:
                               EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                              color: Color(0xffF0F4FF),
+                              color: ColorConfig.primaryColor.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                  width: 0.8, color: Color(0xff235347))),
+                                  width: 0.8, color: ColorConfig.primaryColor)),
                           child: Text(
                             index < 3
                                 ? widget.kategori[index]
@@ -123,6 +124,8 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
             children: List.generate(
               durasi.length,
               (index) => InkWell(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 onTap: () => setState(() => indexDurasi = index),
                 child: Container(
                   margin: EdgeInsets.only(right: 10),
@@ -134,7 +137,7 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
                     border: Border.all(
                         width: 1,
                         color: indexDurasi == index
-                            ? Color(0xff235347)
+                            ? ColorConfig.primaryColor
                             : Color(0xffdddddd)),
                   ),
                   child: Text(
@@ -189,7 +192,7 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 13,
-                                    color: Color(0xff235347)),
+                                    color: ColorConfig.primaryColor),
                               )
                             ],
                           ),
@@ -231,7 +234,7 @@ class _RangkumanSesiState extends State<RangkumanSesi> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13,
-                                  color: Color(0xff235347)),
+                                  color: ColorConfig.primaryColor),
                             ),
                             Text(
                               "Via ${media[0]["title"]}",

@@ -7,6 +7,7 @@ import 'package:taxi_app/components/pages/dokterscreen/ListViewDokter.dart';
 import 'package:taxi_app/components/pages/dokterscreen/SliderFastPsikolog.dart';
 import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/pages/search_dokter/search_page.dart';
+import 'package:taxi_app/services/DokterService.dart';
 
 class DokterScreen extends StatefulWidget {
   const DokterScreen({super.key});
@@ -17,11 +18,10 @@ class DokterScreen extends StatefulWidget {
 
 class _DokterScreenState extends State<DokterScreen> {
   TextEditingController searchController = TextEditingController();
+  DokterService dokterService = DokterService();
 
-  Future<List<DokterModel>> loadJsonData() async {
-    String jsonString = await rootBundle.loadString('assets/data/dokter.json');
-    List<dynamic> jsonData = jsonDecode(jsonString);
-    return jsonData.map((data) => DokterModel.fromJson(data)).toList();
+  Future<List<DokterModel>> getDokter() async {
+    return dokterService.getDokter();
   }
 
   List<DokterModel> dokterTercepat = [];
@@ -31,7 +31,7 @@ class _DokterScreenState extends State<DokterScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadJsonData().then((value) {
+    getDokter().then((value) {
       setState(() {
         dokterTercepat = value.sublist(0, 4);
         dokterDisarankan = value.sublist(4, 9);
@@ -41,6 +41,11 @@ class _DokterScreenState extends State<DokterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (dokterTercepat.isEmpty || dokterDisarankan.isEmpty) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

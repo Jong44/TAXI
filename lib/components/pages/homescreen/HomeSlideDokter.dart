@@ -4,19 +4,12 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 import 'package:taxi_app/components/global/RatingStar.dart';
 import 'package:taxi_app/models/DokterModel.dart';
-import 'package:taxi_app/pages/detailscreen/DokterDetailScreen.dart';
+import 'package:taxi_app/pages/detaildokter/DokterDetailScreen.dart';
 import 'package:taxi_app/utils/formatRupiah.dart';
 
 class HomeSlidePsikolog extends StatelessWidget {
   final List<DokterModel> dokter;
   HomeSlidePsikolog({super.key, required this.dokter});
-
-  List<Color> colorCard = [
-    Color(0xffF28F8F),
-    Color(0xffF7CE45),
-    Color(0xff519FC5),
-    Color(0xffB16668),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +61,11 @@ class HomeSlidePsikolog extends StatelessWidget {
                                           width: double.infinity,
                                           height: 125,
                                           decoration: BoxDecoration(
-                                            color: colorCard[index % 4],
+                                            color: Colors.grey[200],
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    dokter[index].image_url),
+                                                fit: BoxFit.cover),
                                           ),
                                         )),
                                     Container(
@@ -96,7 +93,7 @@ class HomeSlidePsikolog extends StatelessWidget {
                                             height: 5,
                                           ),
                                           Text(
-                                            dokter[index].nama,
+                                            dokter[index].fullname,
                                             style: TextStyle(
                                                 overflow: TextOverflow.ellipsis,
                                                 fontWeight: FontWeight.bold,
@@ -113,7 +110,7 @@ class HomeSlidePsikolog extends StatelessWidget {
                                             height: 5,
                                           ),
                                           Text(
-                                            formatRupiah(dokter[index].harga),
+                                            formatRupiah(dokter[index].price),
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 14,

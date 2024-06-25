@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/pages/detaildekterscreen/JadwalDokter.dart';
 import 'package:taxi_app/components/pages/detaildekterscreen/RiwayatDokter.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/pages/pembayaran/PembayaranScreen.dart';
 
@@ -103,7 +104,7 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                       color: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                          image: NetworkImage(widget.dokter.fotoProfil),
+                          image: NetworkImage(widget.dokter.image_url),
                           fit: BoxFit.cover)),
                 ),
                 SizedBox(
@@ -127,7 +128,7 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                                 Text(listTab[index],
                                     style: TextStyle(
                                         color: indexTab == index
-                                            ? Color(0xff235347)
+                                            ? ColorConfig.primaryColor
                                             : Colors.black,
                                         fontWeight: indexTab == index
                                             ? FontWeight.w500
@@ -140,7 +141,7 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                                   height: 2,
                                   width: listTab[index].length.toDouble() * 8.0,
                                   color: indexTab == index
-                                      ? Color(0xff235347)
+                                      ? ColorConfig.primaryColor
                                       : Colors.transparent,
                                 )
                               ],
@@ -157,6 +158,7 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                 ),
                 indexTab == 0
                     ? JadwalDokter(
+                        name: widget.dokter.fullname.toString(),
                         onSelectedtanggal: (Map<String, dynamic> data) {
                           onSelected['tanggal'] = data['tanggal'];
                           onSelected['hari'] = data['hari'];
@@ -199,11 +201,11 @@ class _DokterDetailScreenState extends State<DokterDetailScreen> {
                         },
                       )
                     : RiwayatDokter(
-                        nama: widget.dokter.nama,
-                        ahli: widget.dokter.ahli,
-                        pendidikan: widget.dokter.pendidikan,
+                        nama: widget.dokter.fullname,
+                        ahli: widget.dokter.spesialis,
+                        pendidikan: widget.dokter.education,
                         sipp: widget.dokter.sipp,
-                        kategori: widget.dokter.kategori,
+                        kategori: widget.dokter.category,
                       ),
                 SizedBox(
                   height: 20,

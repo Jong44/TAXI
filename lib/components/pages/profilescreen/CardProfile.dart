@@ -37,7 +37,7 @@ class CardProfile extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.grey[200],
               radius: 30,
-              backgroundImage: AssetImage('assets/dokter1.png'),
+              backgroundImage: NetworkImage(profile.image_url),
             ),
             SizedBox(
               width: 20,

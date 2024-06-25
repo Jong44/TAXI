@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:taxi_app/components/global/OnlineStatus.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/DokterModel.dart';
-import 'package:taxi_app/pages/detailscreen/DokterDetailScreen.dart';
+import 'package:taxi_app/pages/detaildokter/DokterDetailScreen.dart';
 import 'package:taxi_app/utils/formatRupiah.dart';
 
 class ListViewDokter extends StatelessWidget {
@@ -43,7 +44,7 @@ class ListViewDokter extends StatelessWidget {
               height: 100,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(dokterList[index].fotoProfil),
+                      image: NetworkImage(dokterList[index].image_url),
                       fit: BoxFit.cover),
                   color: Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(10)),
@@ -57,7 +58,7 @@ class ListViewDokter extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  dokterList[index].nama,
+                  dokterList[index].fullname,
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
@@ -68,7 +69,7 @@ class ListViewDokter extends StatelessWidget {
                   height: 3,
                 ),
                 Text(
-                  kategori(dokterList[index].kategori),
+                  kategori(dokterList[index].category),
                   maxLines: 1,
                   style: TextStyle(
                     overflow: TextOverflow.ellipsis,
@@ -95,7 +96,7 @@ class ListViewDokter extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "${dokterList[index].pengalaman} Tahun",
+                        "${dokterList[index].experience} Tahun",
                         style: TextStyle(
                           fontSize: 11,
                         ),
@@ -108,7 +109,7 @@ class ListViewDokter extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      formatRupiah(dokterList[index].harga),
+                      formatRupiah(dokterList[index].price),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -119,7 +120,7 @@ class ListViewDokter extends StatelessWidget {
                         width: 80,
                         height: 30,
                         decoration: BoxDecoration(
-                            color: Color(0xff173b34),
+                            color: ColorConfig.primaryColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "Profile",

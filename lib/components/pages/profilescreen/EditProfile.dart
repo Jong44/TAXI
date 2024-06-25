@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/MainButton.dart';
 import 'package:taxi_app/config/ColorConfig.dart';
+import 'package:taxi_app/models/ProfileModel.dart';
 import 'package:taxi_app/services/ProfileServices.dart';
 
 class EditProfile extends StatefulWidget {
@@ -9,8 +10,10 @@ class EditProfile extends StatefulWidget {
   final jenisKelamin;
   final nomorTelepon;
   final alamatEmail;
+  final image;
   const EditProfile(
       {super.key,
+      required this.image,
       required this.nama,
       required this.tanggalLahir,
       required this.jenisKelamin,
@@ -28,14 +31,14 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController nomorTeleponController = TextEditingController();
   TextEditingController alamatEmailController = TextEditingController();
 
-  Map<String, dynamic> data = {
-    "nama": "",
-    "tanggalLahir": "",
-    "jenisKelamin": "",
-    "nomorTelepon": "",
-    "alamatEmail": "",
-    "fotoProfil": "",
-  };
+  ProfileModel profile = ProfileModel(
+    fullName: "",
+    birthday: "",
+    email: "",
+    no_hp: "",
+    gender: "",
+    image_url: "",
+  );
 
   @override
   void initState() {
@@ -50,7 +53,6 @@ class _EditProfileState extends State<EditProfile> {
       nomorTeleponController.text = widget.nomorTelepon;
       alamatEmailController.text = widget.alamatEmail;
     });
-    print(widget.tanggalLahir.split("-"));
   }
 
   @override
@@ -299,24 +301,37 @@ class _EditProfileState extends State<EditProfile> {
           ),
           MainButton(
             title: "Simpan",
-            onpressed: () {
+            onpressed: () async {
               setState(() {
-                data["nama"] = namaController.text;
-                data["tanggalLahir"] =
-                    "${tanggalLahir[0]} / ${tanggalLahir[1]} / ${tanggalLahir[2]}";
-                data["jenisKelamin"] =
+                profile.fullName = namaController.text;
+                profile.birthday =
+                    "${tanggalLahir[2]}-${tanggalLahir[1]}-${tanggalLahir[0]}";
+                profile.email = alamatEmailController.text;
+                profile.no_hp = nomorTeleponController.text;
+                profile.gender =
                     indexJenisKelamin == 0 ? "Laki-laki" : "Perempuan";
-                data["nomorTelepon"] = nomorTeleponController.text;
-                data["alamatEmail"] = alamatEmailController.text;
-                data["fotoProfil"] = "";
               });
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Data berhasil disimpan"),
-                  duration: Duration(seconds: 2),
-                ),
-              );
+              ProfileService profileService = ProfileService();
+
+              final response =
+                  await profileService.updateProfile(profile, widget.image);
+
+              if (response == "Success") {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Data berhasil disimpan"),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(response.toString()),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
             },
             borderRadius: 10.0,
           ),

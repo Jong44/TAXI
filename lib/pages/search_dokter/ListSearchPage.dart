@@ -31,14 +31,15 @@ class _ListSearchPageState extends State<ListSearchPage> {
 
       // Check if nama (name) should be filtered
       if (widget.params.isNotEmpty) {
-        namaMatch =
-            element.nama.toLowerCase().contains(widget.params.toLowerCase());
+        namaMatch = element.fullname
+            .toLowerCase()
+            .contains(widget.params.toLowerCase());
       }
 
       // Check if kategori (category) should be filtered
       if (widget.listKategoriParams.isNotEmpty) {
         // Check if any kategori in widget.listKategoriParams matches any kategori in element.kategori
-        kategoriMatch = element.kategori.any((kategori) =>
+        kategoriMatch = element.category.any((kategori) =>
             widget.listKategoriParams.any((filterKategori) =>
                 kategori.toLowerCase().contains(filterKategori.toLowerCase())));
       }

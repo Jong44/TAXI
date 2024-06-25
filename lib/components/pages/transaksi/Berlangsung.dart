@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/models/BookingModel.dart';
+import 'package:taxi_app/models/DokterModel.dart';
 import 'package:taxi_app/utils/formatTanggal.dart';
 
 class Berlangsung extends StatelessWidget {
-  final List<BookingModel> listTransaksi;
+  final List<Map<String, dynamic>> listTransaksi;
   const Berlangsung({super.key, required this.listTransaksi});
 
   @override
@@ -14,6 +16,7 @@ class Berlangsung extends StatelessWidget {
         padding: EdgeInsets.all(20),
         itemCount: listTransaksi.length,
         itemBuilder: (context, index) {
+          DokterModel dokterMap = listTransaksi[index]['dokter'];
           return Container(
             margin: EdgeInsets.only(bottom: 20),
             width: double.infinity,
@@ -34,7 +37,7 @@ class Berlangsung extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${formatTanggal(DateTime.parse(listTransaksi[index].date))}, ${listTransaksi[index].waktu}",
+                  "${formatTanggal(DateTime.parse(listTransaksi[index]['date']))} - ${listTransaksi[index]['waktu']}",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -55,8 +58,7 @@ class Berlangsung extends StatelessWidget {
                       height: 80,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  listTransaksi[index].dokter.fotoProfil),
+                              image: NetworkImage(dokterMap.image_url),
                               fit: BoxFit.cover),
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(15)),
@@ -68,10 +70,14 @@ class Berlangsung extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          listTransaksi[index].dokter.nama,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          dokterMap.fullname,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 13),
                         ),
-                        Text(listTransaksi[index].dokter.ahli),
+                        Text(dokterMap.spesialis,
+                            style: TextStyle(fontSize: 12)),
+                        Text("Durasi: ${listTransaksi[index]['durasi']}",
+                            style: TextStyle(fontSize: 12)),
                       ],
                     ),
                   ],
@@ -104,7 +110,7 @@ class Berlangsung extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 11),
                         ),
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff173b34),
+                            backgroundColor: ColorConfig.primaryColor,
                             minimumSize: Size(double.infinity, 35)),
                       ),
                     )
