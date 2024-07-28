@@ -57,7 +57,7 @@ class HomeBlogSlide extends StatelessWidget {
                                       )));
                         },
                         child: CardBlog(
-                            title: blog[index]['judul'],
+                            title: blog[index]['title'],
                             image: blog[index]['image']),
                       ),
                       SizedBox(

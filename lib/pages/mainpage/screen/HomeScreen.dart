@@ -70,6 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (dokter.isEmpty || blog.isEmpty || podcast.isEmpty) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       body: SafeArea(
         child: ListView(

@@ -37,7 +37,7 @@ class Berlangsung extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${formatTanggal(DateTime.parse(listTransaksi[index]['date']))} - ${listTransaksi[index]['waktu']}",
+                  "${formatTanggalHari(DateTime.parse(listTransaksi[index]['date']))} - ${listTransaksi[index]['waktu']}",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(

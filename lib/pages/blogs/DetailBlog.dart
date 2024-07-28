@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/components/global/DashedDivider.dart';
+import 'package:taxi_app/utils/formatTanggal.dart';
 
 class DetailBlog extends StatelessWidget {
   final Map blog;
@@ -25,7 +26,7 @@ class DetailBlog extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  blog['judul'],
+                  blog['title'],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
@@ -46,7 +47,7 @@ class DetailBlog extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "15 Januari 2021",
+                  formatTanggal(blog['createdAt']),
                   style: TextStyle(
                     fontSize: 12,
                   ),
@@ -55,7 +56,7 @@ class DetailBlog extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  blog['isi'],
+                  blog['content'],
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: 13,
@@ -67,14 +68,6 @@ class DetailBlog extends StatelessWidget {
                 DashedDivider(),
                 SizedBox(
                   height: 10,
-                ),
-                Text(
-                  "Referensi :",
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
-                ),
-                Text(
-                  blog['referensi'],
-                  style: TextStyle(fontSize: 12),
                 ),
               ],
             ),

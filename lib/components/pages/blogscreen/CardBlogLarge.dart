@@ -1,11 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:taxi_app/utils/formatTanggal.dart';
 
 class CardBlogLarge extends StatelessWidget {
-  final title;
-  final image;
-  final isi;
-  const CardBlogLarge(
-      {super.key, required this.title, required this.image, required this.isi});
+  final String title;
+  final String image;
+  final String isi;
+  final Timestamp date;
+  CardBlogLarge(
+      {super.key,
+      required this.title,
+      required this.image,
+      required this.isi,
+      required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,7 @@ class CardBlogLarge extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "15 Januari 2021",
+                        formatTanggal(date),
                         style: TextStyle(
                           fontSize: 10,
                         ),

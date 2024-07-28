@@ -183,7 +183,7 @@ class _MainMoodTrackerState extends State<MainMoodTracker> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    date = formatTanggal(DateTime.now());
+    date = formatTanggalHari(DateTime.now());
     MoodTrackerService().getMoodTrackerToday().then((value) {
       setState(() {
         hasil = value;

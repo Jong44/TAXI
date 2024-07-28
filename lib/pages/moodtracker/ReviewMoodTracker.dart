@@ -256,7 +256,7 @@ class _ReviewMoodTrackerState extends State<ReviewMoodTracker> {
                                   children: [
                                     listMood.length != 0
                                         ? Text(
-                                            formatTanggal(DateTime.parse(
+                                            formatTanggalHari(DateTime.parse(
                                                 listMood[indexActive]['date'])),
                                             style: TextStyle(
                                                 letterSpacing: 0.5,

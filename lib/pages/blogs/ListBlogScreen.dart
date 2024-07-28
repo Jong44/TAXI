@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:taxi_app/components/global/CardBlog.dart';
 import 'package:taxi_app/components/global/MainInputText.dart';
 import 'package:taxi_app/components/pages/blogscreen/CardBlogLarge.dart';
+import 'package:taxi_app/config/ColorConfig.dart';
 import 'package:taxi_app/pages/blogs/DetailBlog.dart';
+import 'package:taxi_app/services/ArtikelService.dart';
 
 class ListBlogScreen extends StatefulWidget {
   const ListBlogScreen({super.key});
@@ -15,6 +17,7 @@ class ListBlogScreen extends StatefulWidget {
 }
 
 class _ListBlogScreenState extends State<ListBlogScreen> {
+  ArtikelService artikelService = ArtikelService();
   final searchController = TextEditingController();
   List<String> kategori = [
     "Semua",
@@ -25,19 +28,13 @@ class _ListBlogScreenState extends State<ListBlogScreen> {
   ];
   int indexKategori = 0;
 
-  Future<List<dynamic>> loadJsonBlogData() async {
-    String jsonString = await rootBundle.loadString('assets/data/blogs.json');
-    List<dynamic> jsonData = jsonDecode(jsonString);
-    return jsonData.map((data) => data).toList();
-  }
-
   List blog = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadJsonBlogData().then((value) {
+    artikelService.getArtikel().then((value) {
       setState(() {
         blog = value;
       });
@@ -92,7 +89,7 @@ class _ListBlogScreenState extends State<ListBlogScreen> {
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               decoration: BoxDecoration(
                                 color: indexKategori == index
-                                    ? Color(0xffFF235347)
+                                    ? ColorConfig.primaryColor
                                     : Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -126,12 +123,14 @@ class _ListBlogScreenState extends State<ListBlogScreen> {
                   height: 175,
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 2,
+                      itemCount: blog.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Row(
                           children: [
                             InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () {
                                 Navigator.push(
                                     context,
@@ -141,7 +140,7 @@ class _ListBlogScreenState extends State<ListBlogScreen> {
                                             )));
                               },
                               child: CardBlog(
-                                title: blog[index]['judul'],
+                                title: blog[index]['title'],
                                 image: blog[index]['image'],
                               ),
                             ),
@@ -166,6 +165,8 @@ class _ListBlogScreenState extends State<ListBlogScreen> {
                   children: List.generate(
                     blog.length,
                     (index) => InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () {
                         Navigator.push(
                             context,
@@ -175,9 +176,10 @@ class _ListBlogScreenState extends State<ListBlogScreen> {
                                     )));
                       },
                       child: CardBlogLarge(
-                        title: blog[index]['judul'],
+                        title: blog[index]['title'],
                         image: blog[index]['image'],
-                        isi: blog[index]['isi'],
+                        isi: blog[index]['content'],
+                        date: blog[index]['createdAt'],
                       ),
                     ),
                   ),
